@@ -1,1 +1,1 @@
-from . import agent_processor
+from agent.agent_processor import send_message_to_agent

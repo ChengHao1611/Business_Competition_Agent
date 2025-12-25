@@ -1,4 +1,4 @@
-import agent.agent_processor as ap
+from agent import send_message_to_agent
 
 if __name__ == "__main__":
-    print(ap.send_message_to_agent("1", "1", 1))
+    print(send_message_to_agent("1", "1", 1))
