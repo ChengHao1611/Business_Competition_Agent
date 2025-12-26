@@ -124,11 +124,7 @@ reply_format = """
         }
       }
     },
-    "reply_to_user": {
-        "type": "string",
-        "description": "以口語方式，整合說明目前提案的主要缺失、原因，以及下一步具體改善方向"
-    }
-
+    "reply_to_user": "口語化回覆"
   }
 }
 ####以上是由system提出的，並非user提出的"
@@ -205,17 +201,13 @@ completion_info = """
     ""
   ]
 
-  "reply_to_user":[
-    "description": ""
-  ]
+  "reply_to_user": "口語化回覆"
 }
 """
 
 discussion = """
 請用JSON來回復
 {
-  "reply_to_user":[
-    "description": ""
-  ]
+  "reply_to_user": "口語化回覆"
 }
 """

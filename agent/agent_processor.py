@@ -32,7 +32,8 @@ def  send_message_to_agent(user_name: str, user_message: str, mode: int) -> str:
         #get_user_message_history(user_name: str, role: str) -> str(user_message_history):
         result_message = f"{user_message}" + pt.discussion
         messages.append({"role" : "user", "content": result_message})
-        print(send_messages_to_LLM(messages))
+        LLM_response = discuss_proposal(messages)
+        print(LLM_response)
         #set_user_message_history(user_name: str, role: str, message: str):
     elif mode == 3:
         #implement get_user_message_history(user_name: str, role: str) -> str(user_message_history):
@@ -52,3 +53,7 @@ def  send_message_to_agent(user_name: str, user_message: str, mode: int) -> str:
         result_message = "LLM回傳提案評分"
 
     return result_message
+
+def discuss_proposal(messages: list[dict[str,str]]) -> str:
+    response = send_messages_to_LLM(messages)
+    return response["reply_to_user"]
