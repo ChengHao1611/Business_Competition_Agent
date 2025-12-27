@@ -1,4 +1,6 @@
-from agent.tool import Tool
+from agent.tool import (Tool, initialize_user_history)
+from db.db_op import get_user_message_history,
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -18,6 +20,9 @@ def send_message_to_agent(user_name: str, user_message: str, mode: int) -> str:
     回傳:
         str: LLM回覆的訊息
     """
+    if(len(get_user_message_history(user_name)) == 0):
+        initialize_user_history(user_name)
+
     if mode == 1:
         return Tool.find_completion(user_name, user_message)
         #print(send_messages_to_LLM(messages))
