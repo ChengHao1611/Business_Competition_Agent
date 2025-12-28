@@ -77,10 +77,10 @@ class Tool:
         try:
             initialize_user_history(user_name)
             messages = get_user_message_history(user_name)
-            print(f"找到{user_message}競賽")
-            set_user_message_history(user_name, "user", user_message)
+            #print(f"找到{user_message}競賽")
             result_message = fetch_page_text(user_message)["text"]
-            messages.append(result_message + pt.completion_info)
+            set_user_message_history(user_name, "user", result_message)
+            messages.append({"role": "user", "content": f"{result_message} + {pt.completion_info}"})
             response = send_messages_to_LLM(messages)
             LLM_response = response["reply_to_user"]
             set_user_message_history(user_name, "assistant", LLM_response)

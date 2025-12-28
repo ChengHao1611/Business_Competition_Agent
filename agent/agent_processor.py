@@ -1,5 +1,5 @@
 from agent.tool import (Tool, initialize_user_history)
-from db.db_op import get_user_message_history,
+from db.db_op import get_user_message_history
 
 import logging
 

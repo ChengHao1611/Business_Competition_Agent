@@ -133,7 +133,8 @@ user proposal:
 """
 
 completion_info = """
-根據上面的競賽名稱，幫我上網站爬競賽資訊並整理競賽資訊，並回傳以下JSON模板的回覆
+一律用JSON回覆
+根據上面的競賽資訊，幫我整理競賽資訊，並回傳以下JSON模板的回覆
 {
   "competition_meta": {
     "competition_name": "",
@@ -201,7 +202,13 @@ completion_info = """
     ""
   ]
 
-  "reply_to_user": "" ##口語化回覆給使用者
+  "reply_to_user": "
+    "競賽名稱、時程、主辦方",
+    "競賽介紹"
+    "如何報名"
+    "競賽流程"
+    "得獎獎勵"
+  " ##將上述的競賽資訊整理後，口語化回覆給使用者，需要將上述全部的競賽資訊都讓使用者知道，可以用列點來說明
 }
 """
 
@@ -213,7 +220,8 @@ discussion = """
 """
 
 proposal_integrated_template = """
-請用JSON來回復，根據評分細項來整理message中role是user的content，將user的content整理成一份完整的提案
+一律用JSON回覆
+根據評分細項來整理message中role是user的content，將user的content整理成一份完整的提案
 若該細項user沒有說明則跳過也不用顯示給user，只整理role == user 提供的內容，不要將assiant的內容加進去
 {
   "reply_to_user": "
