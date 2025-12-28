@@ -1,5 +1,5 @@
 from . import proposal_template as pt
-from agent.crawl_web_page import fetch_page_text
+from agent.crawl_web_page import search_competition_with_serpapi
 from ollamaLLM import send_messages_to_LLM
 import logging
 from db.db_op import (
@@ -101,7 +101,10 @@ class Tool:
             initialize_user_history(user_name)
             messages = get_user_message_history(user_name)
             #print(f"找到{user_message}競賽")
-            result_message = fetch_page_text(user_message)["text"]
+            get_web_info = search_competition_with_serpapi(user_message)
+            #print(get_web_info)
+            result_message = get_web_info["pages"][0]["text"] + get_web_info["pages"][1]["text"]
+            #print(result_message)
             set_user_message_history(user_name, "user", result_message)
             messages.append({"role": "user", "content": f"{result_message} + {pt.completion_info}"})
             response = send_messages_to_LLM(messages)

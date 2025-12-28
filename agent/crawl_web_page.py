@@ -141,8 +141,8 @@ def search_competition_with_serpapi(
 
 if __name__ == "__main__":
     try:
-        #print(search_competition_with_serpapi("創見南方"))
-        print(fetch_page_text("https://ilink.web2.ncku.edu.tw/p/404-1252-217061.php?Lang=zh-tw"))
+        print(search_competition_with_serpapi("創見南方"))
+        #print(fetch_page_text("https://ilink.web2.ncku.edu.tw/p/404-1252-217061.php?Lang=zh-tw"))
     except Exception as e:
         logger.warning("爬尋網站失敗")
         print(e)

@@ -222,7 +222,8 @@ discussion = """
 proposal_integrated_template = """
 一律用JSON回覆
 根據評分細項來整理message中role是user的content，將user的content整理成一份完整的提案
-若該細項user沒有說明則跳過也不用顯示給user，只整理role == user 提供的內容，不要將assiant的內容加進去
+只需要整理role == user 提供的內容，不要將assiant的內容加進去
+一定要輸出JSON
 {
   "reply_to_user": "
 要解決的痛點或未被滿足的需求:
