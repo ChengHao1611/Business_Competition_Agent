@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     get_response = send_message_to_agent("4", """
-    創見南方
+    https://sites.google.com/view/ncku-ilink/%E9%A6%96%E9%A0%81/
                           """, 1) 
     
     print(get_response)

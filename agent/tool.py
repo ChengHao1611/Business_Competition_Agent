@@ -103,14 +103,7 @@ class Tool:
             #print(f"找到{user_message}競賽")
             get_web_info = search_competition_with_serpapi(user_message)
             #print(get_web_info)
-            result_message = ""
-            #result_message = get_web_info["pages"][0]["text"] + get_web_info["pages"][1]["text"]
-            if(get_web_info["pages"][0]["ok"]):
-                result_message += get_web_info["pages"][0]["text"]
-            if(get_web_info["pages"][1]["ok"]):
-                result_message += get_web_info["pages"][1]["text"]
-            if(result_message == ""):
-                return "搜尋網站錯誤"
+            result_message = get_web_info["pages"][0]["text"] + get_web_info["pages"][1]["text"]
             #print(result_message)
             set_user_message_history(user_name, "user", result_message)
             messages.append({"role": "user", "content": f"{result_message} + {pt.completion_info}"})
