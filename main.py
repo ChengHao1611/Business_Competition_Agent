@@ -1,4 +1,6 @@
 from agent import send_message_to_agent
+import os
+from Linebot import app
 import logging
 
 logging.basicConfig(
@@ -10,7 +12,8 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     get_response = send_message_to_agent("4", """
-    https://sites.google.com/view/ncku-ilink/%E9%A6%96%E9%A0%81/
-                          """, 1) 
+    創見南方
+                          """, 2) 
     
     print(get_response)
+    #app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

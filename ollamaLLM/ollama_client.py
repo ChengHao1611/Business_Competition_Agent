@@ -17,7 +17,7 @@ def send_messages_to_LLM(messages: list[dict[str, str]]) -> dict:
         dict: LLM的回覆
     """
     client = Client(
-        host="https://api-gateway.netdb.csie.ncku.edu.tw",
+        host="https://ollama.com",
         headers={"Authorization": "Bearer " + str(os.environ.get("OLLAMA_API_KEY"))}
     )
     #str(os.environ.get("OLLAMA_API_KEY"))

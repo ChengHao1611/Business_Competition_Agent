@@ -9,7 +9,7 @@ def get_connection():
         host="localhost",
         user="root",
         password="1141compute",
-        database="1141_compute_db"
+        database="1141compute_db"
     )
 
 
