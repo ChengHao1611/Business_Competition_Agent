@@ -3,6 +3,12 @@ from ollama import Client
 import json
 import re
 import logging
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Resolve keys.env relative to this file so loading doesn't depend on CWD
+dotenv_path = Path(__file__).resolve().parent.parent / 'keys.env'
+load_dotenv(dotenv_path=str(dotenv_path))
 
 logger = logging.getLogger(__name__)
 

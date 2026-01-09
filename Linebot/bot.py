@@ -3,9 +3,13 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent
 from agent import send_message_to_agent
-from dotenv import load_dotenv
-load_dotenv(dotenv_path='../keys.env')
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Resolve keys.env relative to this file so loading doesn't depend on CWD
+dotenv_path = Path(__file__).resolve().parent.parent / 'keys.env'
+load_dotenv(dotenv_path=str(dotenv_path))
 
 app = Flask(__name__)
 
