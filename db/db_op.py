@@ -83,7 +83,7 @@ def clear_user_message_history(user_name: str):
 # =========================
 # 4. 設置使用者
 # =========================
-def set_user(user_name: str, competition: str, state: int = 0):
+def set_user(user_name: str, competition: str, state: str = "0"):
     print("INSERT MESSAGE : (", user_name, ") ", state, " : ", competition)
     conn = get_connection()
     cursor = conn.cursor()
@@ -104,7 +104,13 @@ def set_user(user_name: str, competition: str, state: int = 0):
 # 5. 查詢某使用者狀態
 # 回傳 int
 # =========================
-def get_user_state(user_name: str) -> int:
+def get_user_state(user_name: str) -> str:
+    """
+        參數：使用者id
+
+        回傳：int
+        -1: 找不到使用者
+    """
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 

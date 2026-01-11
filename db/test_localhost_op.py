@@ -38,7 +38,7 @@ def main():
     print(get_user_state(user))
 
     print("=== 修改使用者狀態 ===")
-    set_user_state(user, 1)
+    set_user_state(user, "1")
     print(get_user_state(user))
 
     print("=== 得到競賽資訊 ===")
