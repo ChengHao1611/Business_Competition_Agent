@@ -83,17 +83,17 @@ def clear_user_message_history(user_name: str):
 # =========================
 # 4. 設置使用者
 # =========================
-def set_user(user_name: str, competition: str, state: str = "0"):
-    print("INSERT MESSAGE : (", user_name, ") ", state, " : ", competition)
+def set_user(user_id: str, competition: str, state: str = "0"):
+    print("INSERT MESSAGE : (", user_id, ") ", state, " : ", competition)
     conn = get_connection()
     cursor = conn.cursor()
 
     sql = """
-    INSERT INTO user (state, competition, name)
+    INSERT INTO user (state, competition, user_id)
     VALUES (%s, %s, %s)
     """
 
-    cursor.execute(sql, (state, competition, user_name))
+    cursor.execute(sql, (state, competition, user_id))
     conn.commit()
 
     cursor.close()
@@ -104,7 +104,7 @@ def set_user(user_name: str, competition: str, state: str = "0"):
 # 5. 查詢某使用者狀態
 # 回傳 int
 # =========================
-def get_user_state(user_name: str) -> str:
+def get_user_state(user_id: str) -> str:
     """
         參數：使用者id
 
@@ -117,10 +117,10 @@ def get_user_state(user_name: str) -> str:
     sql = """
     SELECT state
     FROM user
-    WHERE name = %s
+    WHERE user_id = %s
     """
 
-    cursor.execute(sql, (user_name,))
+    cursor.execute(sql, (user_id,))
     result = cursor.fetchone()
 
     cursor.close()
@@ -132,17 +132,17 @@ def get_user_state(user_name: str) -> str:
 # =========================
 # 6. 設置某使用者狀態
 # =========================
-def set_user_state(user_name: str, user_state: int):
+def set_user_state(user_id: str, state: int):
     conn = get_connection()
     cursor = conn.cursor()
 
     sql = """
     UPDATE user
     SET state = %s
-    WHERE name = %s
+    WHERE user_id = %s
     """
 
-    cursor.execute(sql, (user_state, user_name))
+    cursor.execute(sql, (state, user_id))
     conn.commit()
 
     cursor.close()
@@ -152,17 +152,17 @@ def set_user_state(user_name: str, user_state: int):
 # 7. 查詢某使用者參加的競賽
 # 回傳 int
 # =========================
-def get_user_competition(user_name: str) -> str:
+def get_user_competition(user_id: str) -> str:
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
     sql = """
     SELECT competition
     FROM user
-    WHERE name = %s
+    WHERE user_id = %s
     """
 
-    cursor.execute(sql, (user_name,))
+    cursor.execute(sql, (user_id,))
     result = cursor.fetchone()
 
     cursor.close()
@@ -174,17 +174,17 @@ def get_user_competition(user_name: str) -> str:
 # =========================
 # 8. 設置某使用者參加的競賽
 # =========================
-def set_user_competition(user_name: str, user_competition: str):
+def set_user_competition(user_id: str, competition: str):
     conn = get_connection()
     cursor = conn.cursor()
 
     sql = """
     UPDATE user
     SET competition = %s
-    WHERE name = %s
+    WHERE user_id = %s
     """
 
-    cursor.execute(sql, (user_competition, user_name))
+    cursor.execute(sql, (competition, user_id))
     conn.commit()
 
     cursor.close()
@@ -193,12 +193,12 @@ def set_user_competition(user_name: str, user_competition: str):
 # =========================
 # 9. 刪除某使用者
 # =========================
-def clear_user(user_name: str):
+def clear_user(user_id: str):
     conn = get_connection()
     cursor = conn.cursor()
 
-    sql = "DELETE FROM user WHERE name = %s"
-    cursor.execute(sql, (user_name,))
+    sql = "DELETE FROM user WHERE user_id = %s"
+    cursor.execute(sql, (user_id,))
     conn.commit()
 
     cursor.close()

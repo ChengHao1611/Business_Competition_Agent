@@ -43,16 +43,17 @@ def handle_message(event):
         將傳入的訊息交給agent來做判斷並回應
     """
     user_id = event.source.user_id
+    user_message = event.message.text
     if get_user_state(user_id) == -1:
         set_user(user_id, user_message, "0")
     
     user_state = get_user_state(user_id)
-    user_message = event.message.text
+
     # line_bot_api.reply_message(
     #     event.reply_token,
     #     TextSendMessage(text=user_message)
     # )
-    result = send_message_to_agent(user_id, user_message, "2")
+    result = send_message_to_agent(user_id, user_message, "1")
     try:
         line_bot_api.reply_message(
             event.reply_token,

@@ -67,14 +67,14 @@ logger = logging.getLogger(__name__)
 #     兩種模式各有優缺點，選哪個要看你的產品特性、目標客群和長期目標。若你的 agent 需要持續更新、提供線上支援、收集使用者回饋，訂閱制比較適合，因為可以穩定的現金流、降低用戶一次性投入的門檻，同時也方便你 持續迭代功能。相對的，授權給其他公司收權利金的方式適合你已經有成熟、相對固定的核心技術，想快速擴散 到不同市場或與大型平台合作，讓對方負責行銷、客服等，換來一次性的授權費或持續的版稅。實務上也可以混 合使用：基礎功能走訂閱，進階或客製化模組授權給企業，這樣既能保證穩定收入，又能開拓大客戶的合作機會 。建議先評估產品的更新頻率、客戶願意承擔的成本，以及你自己想要投入的資源，再決定主打哪一條路線，或 是兩條路一起走。
 #     """
 # }]
-def initialize_user_history(user_name: str):
-    clear_user_message_history(user_name)
-    set_user_message_history(user_name, "system", pt.system_role)
+def initialize_user_history(user_id: str):
+    clear_user_message_history(user_id)
+    set_user_message_history(user_id, "system", pt.system_role)
 
 
 class Tool:
     @staticmethod
-    def LLM_choose_tool(user_name: str, user_message: str) -> str:
+    def LLM_choose_tool(user_id: str, user_message: str) -> str:
         try:
             messages = [{"role": "user", "content": pt.LLM_choose_template + user_message}]
             response = send_messages_to_LLM(messages)
@@ -82,13 +82,13 @@ class Tool:
             tool = (response["tool"])
             input_word = response["input_word"]
             if tool == "find_completion":
-                return Tool.find_completion(user_name, input_word)
+                return Tool.find_completion(user_id, input_word)
             elif tool == "discuss_proposal":
-                return Tool.discuss_proposal(user_name, input_word)
+                return Tool.discuss_proposal(user_id, input_word)
             elif tool == "organize_proposal":
-                return Tool.organize_proposal(user_name, input_word)
+                return Tool.organize_proposal(user_id, input_word)
             elif tool == "score_proposal":
-                return Tool.score_proposal(user_name, input_word)
+                return Tool.score_proposal(user_id, input_word)
             return "錯誤工具"
         except Exception as e:
             logger.warning("LLM_choose_tool出現問題")
@@ -96,20 +96,20 @@ class Tool:
             return "出現莫名錯誤"
 
     @staticmethod
-    def find_completion(user_name: str, user_message: str) -> str:
+    def find_completion(user_id: str, user_message: str) -> str:
         try:
-            initialize_user_history(user_name)
-            messages = get_user_message_history(user_name)
+            initialize_user_history(user_id)
+            messages = get_user_message_history(user_id)
             #print(f"找到{user_message}競賽")
             get_web_info = search_competition_with_serpapi(user_message)
             #print(get_web_info)
             result_message = get_web_info["pages"][0]["text"] + get_web_info["pages"][1]["text"]
             #print(result_message)
-            set_user_message_history(user_name, "user", result_message)
+            set_user_message_history(user_id, "user", result_message)
             messages.append({"role": "user", "content": f"{result_message} + {pt.completion_info}"})
             response = send_messages_to_LLM(messages)
             LLM_response = response["reply_to_user"]
-            set_user_message_history(user_name, "assistant", LLM_response)
+            set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
             logger.warning("find_completion出現問題")
@@ -117,15 +117,15 @@ class Tool:
             return "出現莫名錯誤"
 
     @staticmethod
-    def discuss_proposal(user_name: str, user_message: str) -> str:
+    def discuss_proposal(user_id: str, user_message: str) -> str:
         try:
-            messages = get_user_message_history(user_name)
+            messages = get_user_message_history(user_id)
             result_message = f"{user_message}" + pt.discussion
             messages.append({"role" : "user", "content": result_message})
-            set_user_message_history(user_name, "user", user_message)
+            set_user_message_history(user_id, "user", user_message)
             response = send_messages_to_LLM(messages)
             LLM_response = response["reply_to_user"]
-            set_user_message_history(user_name, "assistant", LLM_response)
+            set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
             logger.warning("discuss_proposal出現問題")
@@ -133,27 +133,27 @@ class Tool:
             return "出現莫名錯誤"
 
     @staticmethod
-    def organize_proposal(user_name: str, user_message: str) -> str:
+    def organize_proposal(user_id: str, user_message: str) -> str:
         try:
-            messages = get_user_message_history(user_name)
+            messages = get_user_message_history(user_id)
             result_message = pt.proposal_integrated_template
             messages.append({"role" : "user", "content": result_message})
-            set_user_message_history(user_name, "user", user_message)
+            set_user_message_history(user_id, "user", user_message)
             response = send_messages_to_LLM(messages)
             LLM_response = response["reply_to_user"]
-            set_user_message_history(user_name, "assistant", LLM_response)
+            set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
             logger.warning("organize_proposal出現問題")
             print(e)
             return "出現莫名錯誤"
     
-    def score_proposal(user_name: str, user_message: str) -> str:
+    def score_proposal(user_id: str, user_message: str) -> str:
         try:
-            messages = get_user_message_history(user_name)
+            messages = get_user_message_history(user_id)
             result_message = pt.sysetm_promt + pt.proposal_reply_format + f"{user_message}"
             messages.append({"role" : "user", "content": result_message})
-            set_user_message_history(user_name, "user", user_message)
+            set_user_message_history(user_id, "user", user_message)
             response = send_messages_to_LLM(messages)
             LLM_response = f"""總分100分，你拿到{response["scores"]["total_score"]}分
 現況與問題：{response["scores"]["problem_analysis"]}
@@ -168,7 +168,7 @@ class Tool:
 
 {response["reply_to_user"]}
 """
-            set_user_message_history(user_name, "assistant", LLM_response)
+            set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
             logger.warning("score_proposal出現問題")
