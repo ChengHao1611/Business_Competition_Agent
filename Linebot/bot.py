@@ -2,12 +2,11 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent
-from agent import send_message_to_agent
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from . import lintbot_reply_str
-from db.db_op import set_user, set_user_state, set_user_competition, get_user_state
+from . import lintbot_reply_str as lbr
+from agent import send_message_to_agent
 
 # Resolve keys.env relative to this file so loading doesn't depend on CWD
 dotenv_path = Path(__file__).resolve().parent.parent / 'keys.env'
@@ -33,7 +32,7 @@ def callback():
 def handle_follow(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text = lintbot_reply_str.add_friend_reply) # 歡迎訊息
+        TextSendMessage(text = lbr.add_friend_reply) # 歡迎訊息
     )
 
 # handle messages
@@ -44,16 +43,9 @@ def handle_message(event):
     """
     user_id = event.source.user_id
     user_message = event.message.text
-    if get_user_state(user_id) == -1:
-        set_user(user_id, user_message, "0")
-    
-    user_state = get_user_state(user_id)
 
-    # line_bot_api.reply_message(
-    #     event.reply_token,
-    #     TextSendMessage(text=user_message)
-    # )
-    result = send_message_to_agent(user_id, user_message, "1")
+    #result = send_message_to_agent(user_id, user_message)
+    result = send_message_to_agent(user_id, user_message)
     try:
         line_bot_api.reply_message(
             event.reply_token,
