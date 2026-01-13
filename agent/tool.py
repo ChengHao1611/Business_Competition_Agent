@@ -105,8 +105,9 @@ class Tool:
             #print(get_web_info)
             result_message = get_web_info["pages"][0]["text"] + get_web_info["pages"][1]["text"]
             #print(result_message)
-            set_user_message_history(user_id, "user", result_message)
-            messages.append({"role": "user", "content": f"{result_message} + {pt.completion_info}"})
+            #set_user_message_history(user_id, "user", result_message)
+            messages.append({"role": "system", "content": pt.completion_info})
+            messages.append({"role": "user", "content": result_message})
             response = send_messages_to_LLM(messages)
             LLM_response = response["reply_to_user"]
             set_user_message_history(user_id, "assistant", LLM_response)
@@ -120,8 +121,8 @@ class Tool:
     def discuss_proposal(user_id: str, user_message: str) -> str:
         try:
             messages = get_user_message_history(user_id)
-            result_message = f"{user_message}" + pt.discussion
-            messages.append({"role" : "user", "content": result_message})
+            messages.append({"role" : "system", "content": pt.discussion})
+            messages.append({"role" : "user", "content": user_message})
             set_user_message_history(user_id, "user", user_message)
             response = send_messages_to_LLM(messages)
             LLM_response = response["reply_to_user"]
@@ -136,8 +137,8 @@ class Tool:
     def organize_proposal(user_id: str, user_message: str) -> str:
         try:
             messages = get_user_message_history(user_id)
-            result_message = pt.proposal_integrated_template
-            messages.append({"role" : "user", "content": result_message})
+            messages.append({"role" : "system", "content": pt.proposal_integrated_template})
+            messages.append({"role" : "user", "content": user_message})
             set_user_message_history(user_id, "user", user_message)
             response = send_messages_to_LLM(messages)
             LLM_response = response["reply_to_user"]
@@ -151,8 +152,8 @@ class Tool:
     def score_proposal(user_id: str, user_message: str) -> str:
         try:
             messages = get_user_message_history(user_id)
-            result_message = pt.sysetm_promt + pt.proposal_reply_format + f"{user_message}"
-            messages.append({"role" : "user", "content": result_message})
+            messages.append({"role" : "system", "content": pt.sysetm_promt + pt.proposal_reply_format})
+            messages.append({"role" : "user", "content": user_message})
             set_user_message_history(user_id, "user", user_message)
             response = send_messages_to_LLM(messages)
             LLM_response = f"""總分100分，你拿到{response["scores"]["total_score"]}分
