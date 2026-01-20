@@ -32,7 +32,7 @@ def send_messages_to_LLM(messages: list[dict[str, str]]) -> dict:
     print("等待ollma回應")
     try:
         for part in client.chat('gpt-oss:120b', messages=messages, stream=False):
-            #print(part)
+            print(part)
             if(part[0] == "message"):
                 data = json.loads(part[1]["content"])
                 #print(part)

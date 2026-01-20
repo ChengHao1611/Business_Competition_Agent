@@ -24,6 +24,8 @@ def send_message_to_agent(user_id: str, user_message: str = "") -> str:
         0: 由LLM決定要使用哪個模式
         1: 輸入競賽名稱 => 回覆競賽資訊
         1-1: 確認適不適合參加這個競賽
+        1-2: 回傳適不適合的結果
+        1-3: 得到結果後，選擇要參加或放棄此競賽
         2: 輸入提案內容
 
     """
@@ -40,6 +42,10 @@ def send_message_to_agent(user_id: str, user_message: str = "") -> str:
         return state1_find_competition(user_id, user_message)
     elif state == "1-1":
         return state1_1_check_fit_competition(user_id, user_message)
+    elif state == "1-2":
+        return state1_2_answer_question_about_competition(user_id, user_message)
+    elif state == "1-3":
+        return state1_3_confirm_competition(user_id, user_message)
     elif state == "2":
         return Tool.score_proposal(user_id, user_message)
 

@@ -102,7 +102,7 @@ class Tool:
             messages = get_user_message_history(user_id)
             #print(f"找到{user_message}競賽")
             get_web_info = search_competition_with_serpapi(user_message)
-            #print(get_web_info)
+            print(get_web_info)
             result_message = get_web_info["pages"][0]["text"] + get_web_info["pages"][1]["text"]
             #print(result_message)
             #set_user_message_history(user_id, "user", result_message)
@@ -121,7 +121,7 @@ class Tool:
     def discuss_proposal(user_id: str, user_message: str) -> str:
         try:
             messages = get_user_message_history(user_id)
-            messages.append({"role" : "system", "content": pt.discussion})
+            messages.append({"role" : "system", "content": pt.discussion_template})
             messages.append({"role" : "user", "content": user_message})
             set_user_message_history(user_id, "user", user_message)
             response = send_messages_to_LLM(messages)
@@ -173,5 +173,22 @@ class Tool:
             return LLM_response
         except Exception as e:
             logger.warning("score_proposal出現問題")
+            print(e)
+            return "出現莫名錯誤"
+        
+    
+    @staticmethod
+    def fit_competition(user_id: str, user_message: str) -> str:
+        try:
+            messages = get_user_message_history(user_id)
+            messages.append({"role" : "system", "content": pt.fit_competition_template})
+            messages.append({"role" : "user", "content": user_message})
+            set_user_message_history(user_id, "user", user_message)
+            response = send_messages_to_LLM(messages)
+            LLM_response = response["reply_to_user"]
+            set_user_message_history(user_id, "assistant", LLM_response)
+            return LLM_response
+        except Exception as e:
+            logger.warning("fit_competition出現問題")
             print(e)
             return "出現莫名錯誤"

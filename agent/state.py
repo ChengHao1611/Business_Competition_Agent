@@ -31,3 +31,23 @@ def state1_1_check_fit_competition(user_id, user_message: str) -> str:
         result = lrs.error_warning
 
     return result
+
+def state1_2_answer_question_about_competition(user_id: str, user_message: str) -> str:
+    result = Tool.fit_competition(user_id, user_message)
+    if result == "出現莫名錯誤":
+        result = lrs.error_warning
+    result += lrs.reply_suitable_for_competition
+    set_user_state(user_id, "1-3")
+    return result
+
+def state1_3_confirm_competition(user_id: str, user_message: str) -> str:
+    if user_message == "重新選擇競賽":
+        result = lrs.find_new_competition
+        set_user_state(user_id, "1")
+    elif user_message == "參加這個競賽":
+        result = lrs.send_competition_proposal
+        set_user_state(user_id, "2")
+    else:
+        result = lrs.error_warning
+
+    return result
