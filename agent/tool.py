@@ -82,7 +82,7 @@ class Tool:
             tool = (response["tool"])
             input_word = response["input_word"]
             if tool == "find_completion":
-                return Tool.find_completion(user_id, input_word)
+                return Tool.find_competition(user_id, input_word)
             elif tool == "discuss_proposal":
                 return Tool.discuss_proposal(user_id, input_word)
             elif tool == "organize_proposal":
@@ -96,7 +96,7 @@ class Tool:
             return "出現莫名錯誤"
 
     @staticmethod
-    def find_completion(user_id: str, user_message: str) -> str:
+    def find_competition(user_id: str, user_message: str) -> str:
         try:
             initialize_user_history(user_id)
             messages = get_user_message_history(user_id)

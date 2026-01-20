@@ -2,7 +2,7 @@ from agent.tool import (Tool, initialize_user_history)
 from db.db_op import (get_user_message_history, 
                       set_user,
                       get_user_state)
-from Linebot import lintbot_reply_str as lbr
+from Linebot import linebot_reply_str as lbr
 from agent.state import *
 
 import logging

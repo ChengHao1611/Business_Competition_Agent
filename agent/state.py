@@ -4,12 +4,12 @@ from db.db_op import (get_user_message_history,
                       set_user_competition, 
                       get_user_state)
 import logging
-from Linebot import lintbot_reply_str as lrs
+from Linebot import linebot_reply_str as lrs
 
 logger = logging.getLogger(__name__)
 
 def state1_find_competition(user_id: str, user_message: str) -> str:
-    result = Tool.find_completion(user_id, user_message)
+    result = Tool.find_competition(user_id, user_message)
     if result == "出現莫名錯誤":
         result = lrs.error_warning
     result += lrs.check_competition
