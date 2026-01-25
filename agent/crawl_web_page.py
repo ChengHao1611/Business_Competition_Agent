@@ -126,7 +126,7 @@ def search_competition_with_serpapi(
         try:
             pages.append(fetch_page_text(url))
         except Exception as e:
-            pages.append({"ok": False, "url": url, "error": str(e)})
+            pages.append({"ok": False, "url": url, "error": str(e), "text": ""})
 
     return {
         "ok": True,

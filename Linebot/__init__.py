@@ -1,2 +1,2 @@
 from .bot import app
-from . import lintbot_reply_str
+from . import linebot_reply_str

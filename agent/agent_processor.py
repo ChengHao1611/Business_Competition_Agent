@@ -4,6 +4,7 @@ from db.db_op import (get_user_message_history,
                       get_user_state)
 from Linebot import linebot_reply_str as lbr
 from agent.state import *
+from pypdf import PdfReader
 
 import logging
 
@@ -51,3 +52,23 @@ def send_message_to_agent(user_id: str, user_message: str = "") -> str:
 
     logger.warning("狀態不存在")
     return lbr.error_warning
+
+def receive_pdf_file(path: str):
+    try:
+        reader = PdfReader(str(path))
+    except Exception as e:
+        raise ValueError(f"failed to open PDF: {e}")
+
+    texts = []
+    for i, page in enumerate(reader.pages):
+        try:
+            page_text = page.extract_text()
+            if page_text:
+                texts.append(page_text)
+        except Exception as e:
+            raise ValueError(f"failed to extract text from page {i}: {e}")
+
+    if not texts:
+        raise ValueError("PDF contains no extractable text")
+
+    return "\n".join(texts)

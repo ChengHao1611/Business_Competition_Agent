@@ -1,12 +1,17 @@
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent, FileMessage
+import requests
+import tempfile
 import os
 from pathlib import Path
+import logging
 from dotenv import load_dotenv
-from . import lintbot_reply_str as lbr
-from agent import send_message_to_agent
+from . import linebot_reply_str as lbr
+from agent import send_message_to_agent, receive_pdf_file
+
+logger = logging.getLogger(__name__)
 
 # Resolve keys.env relative to this file so loading doesn't depend on CWD
 dotenv_path = Path(__file__).resolve().parent.parent / 'keys.env'
@@ -52,10 +57,79 @@ def handle_message(event):
             TextSendMessage(text = result)
         )
     except:
+        logger.warning("linebot reply_token失效")
         line_bot_api.push_message(
         user_id,
         TextSendMessage(text = result)
         )
+
+@handler.add(MessageEvent, message=FileMessage)
+def handle_file(event):
+    user_id = event.source.user_id
+    message_id = event.message.id
+    tmp_path = None
+    file_size = event.message.file_size
+    file_name = event.message.file_name
+
+    # 檔案大小限制（例如 1MB）
+    if file_size > 1 * 1024 * 1024:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="檔案太大，請上傳 1MB 以下的檔案")
+        )
+        return
+
+    if Path(file_name).suffix.lower() != ".pdf":
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="請上傳pdf檔")
+        )
+        return
+
+    try:
+        # 下載檔案
+        headers = {
+            "Authorization": f"Bearer {os.getenv('LINE_CHANNEL_ACCESS_TOKEN')}"
+        }
+        url = f"https://api-data.line.me/v2/bot/message/{message_id}/content"
+        resp = requests.get(url, headers=headers)
+        resp.raise_for_status()
+
+        # 建立暫存檔
+        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+            tmp.write(resp.content)
+            tmp_path = tmp.name
+
+        logger.info(f"Temp file created: {tmp_path}")
+    
+        #交給 Agent
+        result = receive_pdf_file(tmp_path)
+
+        try:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text = result)
+            )
+        except:
+            logger.warning("linebot reply_token失效")
+            line_bot_api.push_message(
+            user_id,
+            TextSendMessage(text = result)
+        )
+
+    except Exception:
+        logger.exception("File handler failed")
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="處理檔案時發生錯誤，請稍後再試")
+        )
+
+    finally:
+        # 不論成功或失敗都會執行
+        if tmp_path and os.path.exists(tmp_path):
+            os.remove(tmp_path)
+            logger.info(f"Temp file removed: {tmp_path}")
 
 # if __name__ == '__main__':
 #     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
