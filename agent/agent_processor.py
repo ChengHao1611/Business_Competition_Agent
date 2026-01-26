@@ -50,14 +50,14 @@ def send_message_to_agent(user_id: str, user_message: str = "") -> str:
     elif state == "2":
         return Tool.score_proposal(user_id, user_message)
 
-    logger.warning("狀態不存在")
-    return lbr.error_warning
+    logger.warning(f"狀態不存在, 狀態: {state}")
+    return lbr.ERROR_WARNING
 
 def receive_pdf_file(path: str):
     try:
         reader = PdfReader(str(path))
     except Exception as e:
-        raise ValueError(f"failed to open PDF: {e}")
+        raise ValueError("failed to open PDF") from e
 
     texts = []
     for i, page in enumerate(reader.pages):
@@ -66,9 +66,9 @@ def receive_pdf_file(path: str):
             if page_text:
                 texts.append(page_text)
         except Exception as e:
-            raise ValueError(f"failed to extract text from page {i}: {e}")
+            raise ValueError(f"failed to extract text from page {i}") from e
 
     if not texts:
-        raise ValueError("PDF contains no extractable text")
+        raise ValueError("PDF contains no extractable text") from e
 
     return "\n".join(texts)

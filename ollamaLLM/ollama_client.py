@@ -32,20 +32,19 @@ def send_messages_to_LLM(messages: list[dict[str, str]]) -> dict:
     print("等待ollma回應")
     try:
         for part in client.chat('gpt-oss:120b', messages=messages, stream=False):
-            print(part)
+            #print(part)
             if(part[0] == "message"):
                 data = json.loads(part[1]["content"])
                 #print(part)
                 return data
     except json.decoder.JSONDecodeError as je:
-        logger.warning("Json轉dict失敗")
-        print(je)
+        logger.exception("Json轉dict失敗")
         return "Json轉dict失敗"
     except Exception as e: # api錯誤
-        print(error_process(e))
+        error_process(e)
             
 
-def error_process(e: Exception) -> str:
+def error_process(e: Exception):
     """
         處理錯誤: api錯誤
     """
@@ -70,10 +69,8 @@ def error_process(e: Exception) -> str:
 
     if detail == "Invalid API Key" or (detail is None and "Invalid API Key" in str(e)):
         logger.warning("LLM的API錯誤")
-        return "Invalid API Key detected. Please set the OLLAMA_API_KEY environment variable."
     else:
         logger.exception("LLM接收/回覆出現問題")
-        return ("Error:", detail or str(e))
 
 
 if __name__ == "__main__":

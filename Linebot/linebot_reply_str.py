@@ -1,4 +1,4 @@
-add_friend_reply = """你好，這裡是商業競賽小幫手
+ADD_FRIEND_REPLY = """你好，這裡是商業競賽小幫手
 提供我一個你想參加的商業競賽
 我能幫助你更加了解這個競賽內容及自己適不適合參加這個競賽
 以及後續的簡報協作
@@ -8,26 +8,26 @@ add_friend_reply = """你好，這裡是商業競賽小幫手
 訊息回覆大約30秒
 """
 
-error_warning = """不好意思，現在出現了一點小問題，請確認輸入的格式有沒有錯誤，請稍後再輸入新的訊息"""
+ERROR_WARNING = """不好意思，現在出現了一點小問題，請確認輸入的格式有沒有錯誤，稍後再輸入新的訊息"""
 
-check_competition = """
+FIND_COMPETITION = """
 
-以上是競賽資訊，請輸入「」的文字，讓我知道接下來該如何協助你
+請輸入「」的文字，讓我知道接下來該如何協助你
 1. 「重新選擇競賽」
 2. 「確認適不適合參加這個競賽」
 3. 「參加這個競賽」
 """
 
-find_new_competition = "好的，請輸入你想了解的比賽"
+FIND_NEW_COMPETITION = "好的，請輸入你想了解的比賽"
 
-send_competition_proposal = "好的，我將依據競賽資訊來幫你調整提案內容並評分，請傳給我你的提案"
+SEND_COMPETITION_PROPOSAL = "好的，我將依據競賽資訊來幫你調整提案內容並評分，請傳給我你的提案"
 
-confirm_fit_for_competition = """請輸入以下的資訊，讓我來判斷你適不適合參加這個競賽
+CONFIRM_FIT_FOR_COMPETITION = """請輸入以下的資訊，讓我來判斷你適不適合參加這個競賽
 1. 參加過類似比賽的次數
 2. 你的科系
 """
 
-reply_suitable_for_competition = """
+REPLY_SUITABLE_FOR_COMPETITION = """
 
 以上是針對你的回答給出的建議
 接下來請輸入「」的文字，讓我知道接下來該如何協助你

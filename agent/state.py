@@ -11,43 +11,42 @@ logger = logging.getLogger(__name__)
 def state1_find_competition(user_id: str, user_message: str) -> str:
     result = Tool.find_competition(user_id, user_message)
     if result == "出現莫名錯誤":
-        result = lrs.error_warning
-    result += lrs.check_competition
+        return lrs.ERROR_WARNING + "\n\n請再次輸入比賽名稱"
+    result += lrs.FIND_COMPETITION
     set_user_state(user_id, "1-1")
     set_user_competition(user_id, user_message)
     return result
 
 def state1_1_check_fit_competition(user_id, user_message: str) -> str:
     if user_message == "重新選擇競賽":
-        result = lrs.find_new_competition
+        result = lrs.FIND_NEW_COMPETITION
         set_user_state(user_id, "1")
     elif user_message == "確認適不適合參加這個競賽":
-        result = lrs.confirm_fit_for_competition
+        result = lrs.CONFIRM_FIT_FOR_COMPETITION
         set_user_state(user_id, "1-2")
     elif user_message == "參加這個競賽":
-        result = lrs.send_competition_proposal
+        result = lrs.SEND_COMPETITION_PROPOSAL
         set_user_state(user_id, "2")
     else:
-        result = lrs.error_warning
+        result = lrs.ERROR_WARNING + lrs.FIND_COMPETITION
 
     return result
 
 def state1_2_answer_question_about_competition(user_id: str, user_message: str) -> str:
     result = Tool.fit_competition(user_id, user_message)
     if result == "出現莫名錯誤":
-        result = lrs.error_warning
-    result += lrs.reply_suitable_for_competition
+        result = lrs.ERROR_WARNING
     set_user_state(user_id, "1-3")
-    return result
+    return result + lrs.REPLY_SUITABLE_FOR_COMPETITION
 
 def state1_3_confirm_competition(user_id: str, user_message: str) -> str:
     if user_message == "重新選擇競賽":
-        result = lrs.find_new_competition
+        result = lrs.FIND_NEW_COMPETITION
         set_user_state(user_id, "1")
     elif user_message == "參加這個競賽":
-        result = lrs.send_competition_proposal
+        result = lrs.SEND_COMPETITION_PROPOSAL
         set_user_state(user_id, "2")
     else:
-        result = lrs.error_warning
+        result = lrs.ERROR_WARNING + lrs.REPLY_SUITABLE_FOR_COMPETITION
 
     return result

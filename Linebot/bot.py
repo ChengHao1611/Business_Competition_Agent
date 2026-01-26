@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 import logging
 from dotenv import load_dotenv
-from . import linebot_reply_str as lbr
+from . import linebot_reply_str as lrs
 from agent import send_message_to_agent, receive_pdf_file
 
 logger = logging.getLogger(__name__)
@@ -37,7 +37,7 @@ def callback():
 def handle_follow(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text = lbr.add_friend_reply) # 歡迎訊息
+        TextSendMessage(text = lrs.ADD_FRIEND_REPLY) # 歡迎訊息
     )
 
 # handle messages
@@ -51,17 +51,9 @@ def handle_message(event):
 
     #result = send_message_to_agent(user_id, user_message)
     result = send_message_to_agent(user_id, user_message)
-    try:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text = result)
-        )
-    except:
-        logger.warning("linebot reply_token失效")
-        line_bot_api.push_message(
-        user_id,
-        TextSendMessage(text = result)
-        )
+    
+    reply_message_to_user(result, event.reply_token, user_id)
+
 
 @handler.add(MessageEvent, message=FileMessage)
 def handle_file(event):
@@ -71,15 +63,17 @@ def handle_file(event):
     file_size = event.message.file_size
     file_name = event.message.file_name
 
-    # 檔案大小限制（例如 1MB）
-    if file_size > 1 * 1024 * 1024:
+    # 檔案大小限制（例如 2MB）
+    if file_size > 2 * 1024 * 1024:
+        logging.warning("檔案超過2MB")
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="檔案太大，請上傳 1MB 以下的檔案")
+            TextSendMessage(text="檔案太大，請上傳 2MB 以下的檔案")
         )
         return
 
     if Path(file_name).suffix.lower() != ".pdf":
+        logging.warning("檔案不是PDF")
         line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="請上傳pdf檔")
@@ -105,20 +99,10 @@ def handle_file(event):
         #交給 Agent
         result = receive_pdf_file(tmp_path)
 
-        try:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text = result)
-            )
-        except:
-            logger.warning("linebot reply_token失效")
-            line_bot_api.push_message(
-            user_id,
-            TextSendMessage(text = result)
-        )
+        reply_message_to_user(result, event.reply_token, user_id)
 
-    except Exception:
-        logger.exception("File handler failed")
+    except Exception as e:
+        logger.exception(f"File handler failed | user: {user_id} | file: {file_name} ")
 
         line_bot_api.reply_message(
             event.reply_token,
@@ -130,6 +114,24 @@ def handle_file(event):
         if tmp_path and os.path.exists(tmp_path):
             os.remove(tmp_path)
             logger.info(f"Temp file removed: {tmp_path}")
+
+
+def reply_message_to_user(result: str, reply_token, user_id):
+    if(len(result) > 4900):
+        result = result[0:4900]
+
+    try:
+        line_bot_api.reply_message(
+            reply_token,
+            TextSendMessage(text = result)
+        )
+    except:
+        logger.warning("linebot reply_token失效")
+        line_bot_api.push_message(
+        user_id,
+        TextSendMessage(text = result)
+    )
+
 
 # if __name__ == '__main__':
 #     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

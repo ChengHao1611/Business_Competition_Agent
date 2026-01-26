@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(
     level=logging.WARN,
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+    format="%(asctime)s | %(levelname)s | %(name)s | %(funcName)s | %(message)s"
 )
 
 logger = logging.getLogger(__name__)

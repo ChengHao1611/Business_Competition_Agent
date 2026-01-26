@@ -91,8 +91,7 @@ class Tool:
                 return Tool.score_proposal(user_id, input_word)
             return "錯誤工具"
         except Exception as e:
-            logger.warning("LLM_choose_tool出現問題")
-            print(e)
+            logger.exception("LLM_choose_tool出現問題")
             return "出現莫名錯誤"
 
     @staticmethod
@@ -113,8 +112,7 @@ class Tool:
             set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
-            logger.warning("find_completion出現問題")
-            print(e)
+            logger.exception("find_completion出現問題")
             return "出現莫名錯誤"
 
     @staticmethod
@@ -129,8 +127,7 @@ class Tool:
             set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
-            logger.warning("discuss_proposal出現問題")
-            print(e)
+            logger.exception("discuss_proposal出現問題")
             return "出現莫名錯誤"
 
     @staticmethod
@@ -145,8 +142,7 @@ class Tool:
             set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
-            logger.warning("organize_proposal出現問題")
-            print(e)
+            logger.exception("organize_proposal出現問題")
             return "出現莫名錯誤"
     
     def score_proposal(user_id: str, user_message: str) -> str:
@@ -172,8 +168,7 @@ class Tool:
             set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
-            logger.warning("score_proposal出現問題")
-            print(e)
+            logger.exception("score_proposal出現問題")
             return "出現莫名錯誤"
         
     
@@ -189,6 +184,5 @@ class Tool:
             set_user_message_history(user_id, "assistant", LLM_response)
             return LLM_response
         except Exception as e:
-            logger.warning("fit_competition出現問題")
-            print(e)
+            logger.exception("fit_competition出現問題")
             return "出現莫名錯誤"
