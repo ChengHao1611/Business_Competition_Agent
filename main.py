@@ -2,8 +2,10 @@ import os
 from Linebot import app
 import logging
 
+LOG_LEVEL = os.getenv("LOG_LEVEL", "WARN").upper()
+
 logging.basicConfig(
-    level=logging.WARN,
+    level=getattr(logging, LOG_LEVEL, logging.WARN),
     format="%(asctime)s | %(levelname)s | %(name)s | %(funcName)s | %(message)s"
 )
 

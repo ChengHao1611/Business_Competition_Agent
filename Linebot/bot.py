@@ -101,7 +101,7 @@ def handle_file(event):
 
         reply_message_to_user(result, event.reply_token, user_id)
 
-    except Exception as e:
+    except Exception:
         logger.exception(f"File handler failed | user: {user_id} | file: {file_name} ")
 
         line_bot_api.reply_message(
