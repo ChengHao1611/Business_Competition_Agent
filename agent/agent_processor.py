@@ -1,13 +1,14 @@
 from Linebot import linebot_reply_str as lrs
-from agent.state import *
 from pypdf import PdfReader
+from .registry import states
+from db.db import get_state, set_state
 import time
 
 import logging
 
 logger = logging.getLogger(__name__)
 
-def send_message_to_agent(user_id: str, user_message: str = "") -> str:
+def send_message_to_agent(user_id: str, user_message: str="", user_name: str="") -> str:
     """
     使用者傳入訊息，並根據當前使用者的狀態，進行處理後，傳LLM回覆的訊息
 
@@ -19,7 +20,13 @@ def send_message_to_agent(user_id: str, user_message: str = "") -> str:
         str: LLM回覆的訊息
 
     """
-    return "處理中請稍後"
+
+    current_state = get_state(user_id, user_name)
+    state = states[current_state]
+    next_state, reply = state.execute(user_message)
+    set_state(user_id, next_state)
+
+    return reply
 
 def receive_pdf_file(path: str):
     start_time = time.perf_counter()

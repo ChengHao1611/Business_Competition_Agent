@@ -48,6 +48,7 @@ def handle_message(event):
     """
         將傳入的訊息交給agent來做判斷並回應
     """
+    print(event)
     user_id = event.source.user_id
     user_message = event.message.text
 
