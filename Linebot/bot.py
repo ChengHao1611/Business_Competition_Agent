@@ -127,12 +127,12 @@ def reply_message_to_user(result: str, reply_token, user_id):
             reply_token,
             TextSendMessage(text = result)
         )
-    except:
+    except Exception as e:
         logger.warning("linebot reply_token失效")
         line_bot_api.push_message(
-        user_id,
-        TextSendMessage(text = result)
-    )
+            user_id,
+            TextSendMessage(text = result)
+        )
 
 
 # if __name__ == '__main__':

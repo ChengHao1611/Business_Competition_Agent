@@ -42,3 +42,4 @@ wrapt==2.0.1
 yarl==1.22.0
 psycopg2-binary==2.9.11
 pypdf==4.2.0
+supabase==2.27.3
