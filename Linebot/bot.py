@@ -37,10 +37,11 @@ def callback():
 
 @handler.add(FollowEvent)
 def handle_follow(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text = lrs.ADD_FRIEND_REPLY) # 歡迎訊息
-    )
+    user_id = event.source.user_id
+
+    result = send_message_to_agent(user_id)
+    
+    reply_message_to_user(result, event.reply_token, user_id)
 
 # handle messages
 @handler.add(MessageEvent, message=TextMessage)
@@ -48,11 +49,9 @@ def handle_message(event):
     """
         將傳入的訊息交給agent來做判斷並回應
     """
-    print(event)
     user_id = event.source.user_id
     user_message = event.message.text
 
-    #result = send_message_to_agent(user_id, user_message)
     result = send_message_to_agent(user_id, user_message)
     
     reply_message_to_user(result, event.reply_token, user_id)

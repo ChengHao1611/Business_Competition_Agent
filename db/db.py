@@ -14,7 +14,7 @@ supabase = create_client(
 )
 
 TABLE_NAME = os.getenv("SUPABASE_TABLE_NAME")
-START_STATE = "S0-1_team_info"
+START_STATE = "S0_welcome"
 
 res = supabase.table(TABLE_NAME).select("*").limit(1).execute()
 
