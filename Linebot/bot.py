@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 from . import linebot_reply_str as lrs
 from agent import send_message_to_agent, receive_pdf_file
 
+PDF_SIZE = 20 #20MB
+
 logger = logging.getLogger(__name__)
 
 # Resolve keys.env relative to this file so loading doesn't depend on CWD
@@ -63,12 +65,12 @@ def handle_file(event):
     file_size = event.message.file_size
     file_name = event.message.file_name
 
-    # 檔案大小限制（例如 2MB）
-    if file_size > 2 * 1024 * 1024:
+    # 檔案大小限制（例如 PDF_SIZE MB）
+    if file_size > PDF_SIZE * 1024 * 1024:
         logging.warning("檔案超過2MB")
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="檔案太大，請上傳 2MB 以下的檔案")
+            TextSendMessage(text=f"檔案太大，請上傳 {PDF_SIZE}MB 以下的檔案")
         )
         return
 
