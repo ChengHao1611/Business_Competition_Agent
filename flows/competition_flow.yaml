@@ -1,0 +1,8 @@
+start_state: "S0_welcome"
+fallback_state: "S0_welcome"
+states:
+  S0_welcome:
+    node: "flows.nodes.s0_welcome.S0Welcome"
+  S0-1_team_info:
+    node: "flows.nodes.s0_1_team_info.S0_1_TeamInfo"
+
