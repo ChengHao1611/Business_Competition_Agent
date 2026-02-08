@@ -3,6 +3,16 @@ fallback_state: "S0_welcome"
 states:
   S0_welcome:
     node: "flows.nodes.s0_welcome.S0Welcome"
-  S0-1_team_info:
+  S0_1_team_info:
     node: "flows.nodes.s0_1_team_info.S0_1_TeamInfo"
+  S0_1_1_team_idientity:
+    node: "flows.nodes.s0_1_team_info.S0_1_1_team_idientity"
+  S0_1_2_team_size:
+    node: "flows.nodes.s0_1_team_info.S0_1_2_team_size"
+  S0_1_3_team_background:
+    node: "flows.nodes.s0_1_team_info.S0_1_3_team_background"
+  S0_1_4_team_hours:
+    node: "flows.nodes.s0_1_team_info.S0_1_4_team_hours"
+  S0_1_5_end:
+    node: "flows.nodes.s0_1_team_info.S0_1_5_end"
 

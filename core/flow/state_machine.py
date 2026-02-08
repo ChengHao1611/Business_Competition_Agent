@@ -13,7 +13,6 @@ class StateMachine:
 
     def execute(self, current_state: str, context: FlowContext) -> Transition:
         replies: list[str] = []
-        events: list[dict] = []
         data_delta: dict = {}
 
         state = current_state
@@ -31,7 +30,6 @@ class StateMachine:
             transition = node.execute(context, self._deps)
 
             replies.extend(transition.replies)
-            events.extend(transition.events)
             if transition.data_delta:
                 data_delta = {**data_delta, **transition.data_delta}
                 context.data = {**context.data, **transition.data_delta}
@@ -41,7 +39,6 @@ class StateMachine:
                     next_state=transition.next_state,
                     replies=replies,
                     auto_advance=False,
-                    events=events,
                     data_delta=data_delta,
                 )
 

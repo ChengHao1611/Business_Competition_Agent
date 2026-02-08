@@ -3,13 +3,89 @@ from __future__ import annotations
 from core.flow.state_node import StateNode
 from core.flow.transition import Transition
 from core.flow.context import FlowContext, FlowDeps
-from flows.replies import ADD_FRIEND_REPLY
+
 
 
 class S0_1_TeamInfo(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        reply = (
+            "在開始之前，我會先問幾個問題，來了解團隊的基本資訊"
+        )   
+
         return Transition(
-            next_state="S0-1_team_info",
-            replies=[ADD_FRIEND_REPLY],
+            next_state="S0_1_1_team_idientity",
+            replies=[reply],
+            auto_advance=True,
+        )
+
+class S0_1_1_team_idientity(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        reply = (
+            "你們的身份(學生團隊/社會人士/混合/不確定)"
+        )   
+
+        return Transition(
+            next_state="S0_1_2_team_size",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class S0_1_2_team_size(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        reply = (
+            "成員人數"
+        )   
+
+        add_data = {"team_identity" : context.message}
+
+        return Transition(
+            next_state="S0_1_3_team_background",
+            replies=[reply],
+            data_delta = add_data,
+            auto_advance=False,
+        )
+    
+class S0_1_3_team_background(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        reply = (
+            "成員學校/系所背景"
+        )   
+
+        add_data = {"team_size" : context.message}
+
+        return Transition(
+            next_state="S0_1_4_team_hours",
+            replies=[reply],
+            data_delta = add_data,
+            auto_advance=False,
+        )
+    
+class S0_1_4_team_hours(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        reply = (
+            "每週可投入的準備時間(團隊總和)"
+        )   
+
+        add_data = {"team_background" : context.message}
+
+        return Transition(
+            next_state="S0_1_5_end",
+            replies=[reply],
+            data_delta = add_data,
+            auto_advance=False,
+        )
+
+class S0_1_5_end(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        reply = (
+            "恭喜你! 我們完成了團隊基本資訊"
+        )   
+
+        add_data = {"team_hours" : context.message}
+
+        return Transition(
+            next_state="S0_welcome",
+            replies=[reply],
+            data_delta = add_data,
             auto_advance=False,
         )
