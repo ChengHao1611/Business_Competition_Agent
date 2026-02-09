@@ -21,3 +21,11 @@ states:
     node: "flows.nodes.s0_2_competition_info.S0_2_1_GetCompetitionInfo"
   S0_3_CompetitionFit:
     node: "flows.nodes.s0_3_competition_fit.S0_3_CompetitionFit"
+  S0_3_1_CompetitionFitRed:
+    node: "flows.nodes.s0_3_competition_fit.S0_3_1_CompetitionFitRed"
+  S0_3_2_RedChoiceJudge:
+    node: "flows.nodes.s0_3_competition_fit.S0_3_2_RedChoiceJudge"
+  S0_4_Requirement:
+    node: "flows.nodes.s0_4_requirement.S0_4_Requirement"
+  S0_4_1_RequirementJudge:
+    node: "flows.nodes.s0_4_requirement.S0_4_1_RequirementJudge"

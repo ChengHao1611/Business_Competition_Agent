@@ -3,8 +3,8 @@ from __future__ import annotations
 from core.flow.state_node import StateNode
 from core.flow.transition import Transition
 from core.flow.context import FlowContext, FlowDeps
-import logging
 import re
+import logging
 
 logger = logging.getLogger(__name__)
 
@@ -53,16 +53,17 @@ class S0_3_CompetitionFit(StateNode):
         reply = deps.llm_client.send_messages(messages)
         reply_text = str(reply)
 
+        ## 判斷紅綠燈
         match = re.search(r"結論\s*[:：]\s*(綠燈|紅燈)", reply_text)
         verdict = match.group(1) if match else None
 
         if verdict == "綠燈":
-            next_state = "S0_3_CompetitionFit_Green"
+            next_state = "S0_4_Requirement"
         elif verdict == "紅燈":
-            next_state = "S0_3_CompetitionFit_Red"
+            next_state = "S0_3_1_CompetitionFitRed"
         else:
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
-            next_state = "S0_3_CompetitionFit"
+            next_state = "S0_Welcome" ##TODO
 
         add_data = {
             "competition": competition_info,
@@ -73,6 +74,43 @@ class S0_3_CompetitionFit(StateNode):
             next_state=next_state,
             replies=[reply_text],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True,
         )
     
+class S0_3_1_CompetitionFitRed(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        reply = (
+            "這個競賽在資格或需求上，與你們團隊目前的條件不太相符，參賽風險較高。\n"
+            "接下來請告訴我你想怎麼做，我會依你的選擇繼續協助你。\n"
+            "請回覆1或2：\n"
+            "1 重新尋找其他更適合的競賽\n"
+            "2 即使風險較高，仍想嘗試參加這個競賽\n"
+        )
+
+        return Transition(
+            next_state="S0_3_2_RedChoiceJudge",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class S0_3_2_RedChoiceJudge(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        message = context.message
+
+        if message == "1":
+            next_state = "S0_Welcome"
+            auto_advance = True
+        elif message == "2":
+            next_state = "S0_4_Requirement"
+            auto_advance = True
+        else:
+            logger.warning(f"{context.user_id} 的選擇錯誤")
+            next_state = "S0_3_2_RedChoiceJudge"
+            auto_advance = False
+
+        return Transition(
+            next_state=next_state,
+            replies=[],
+            auto_advance=auto_advance,
+        )
