@@ -1,18 +1,23 @@
-start_state: "S0_welcome"
-fallback_state: "S0_welcome"
+start_state: "S0_Welcome"
+fallback_state: "S0_Welcome"
 states:
-  S0_welcome:
+  S0_Welcome:
     node: "flows.nodes.s0_welcome.S0Welcome"
-  S0_1_team_info:
+  S0_1_TeamInfo:
     node: "flows.nodes.s0_1_team_info.S0_1_TeamInfo"
-  S0_1_1_team_idientity:
-    node: "flows.nodes.s0_1_team_info.S0_1_1_team_idientity"
-  S0_1_2_team_size:
-    node: "flows.nodes.s0_1_team_info.S0_1_2_team_size"
-  S0_1_3_team_background:
-    node: "flows.nodes.s0_1_team_info.S0_1_3_team_background"
-  S0_1_4_team_hours:
-    node: "flows.nodes.s0_1_team_info.S0_1_4_team_hours"
-  S0_1_5_end:
-    node: "flows.nodes.s0_1_team_info.S0_1_5_end"
-
+  S0_1_1_TeamIdientity:
+    node: "flows.nodes.s0_1_team_info.S0_1_1_TeamIdientity"
+  S0_1_2_TeamSize:
+    node: "flows.nodes.s0_1_team_info.S0_1_2_TeamSize"
+  S0_1_3_TeamBackground:
+    node: "flows.nodes.s0_1_team_info.S0_1_3_TeamBackground"
+  S0_1_4_TeamHours:
+    node: "flows.nodes.s0_1_team_info.S0_1_4_TeamHours"
+  S0_1_5_End:
+    node: "flows.nodes.s0_1_team_info.S0_1_5_End"
+  S0_2_CompetitionInfo:
+    node: "flows.nodes.s0_2_competition_info.S0_2_CompetitionInfo"
+  S0_2_1_GetCompetitionInfo:
+    node: "flows.nodes.s0_2_competition_info.S0_2_1_GetCompetitionInfo"
+  S0_3_CompetitionFit:
+    node: "flows.nodes.s0_3_competition_fit.S0_3_CompetitionFit"

@@ -8,7 +8,7 @@ from core.flow.context import FlowContext, FlowDeps
 class S0Welcome(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
-        add_friend_reply = (
+        reply = (
             "歡迎使用【競賽小幫手】\n"
             "我會依照你的狀況，陪你從「確認競賽是否適合」到「產出完整可投的提案」。\n"
             "不論你現在有沒有提案，我都會帶你走對的流程，補齊缺少的內容、對齊競賽方向。\n"
@@ -18,7 +18,7 @@ class S0Welcome(StateNode):
         )
 
         return Transition(
-            next_state="S0_1_team_info",
-            replies=[add_friend_reply],
+            next_state="S0_1_TeamInfo",
+            replies=[reply],
             auto_advance=True,
         )

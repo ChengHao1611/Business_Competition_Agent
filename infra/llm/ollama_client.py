@@ -26,7 +26,7 @@ class OllamaClient(LLMClient):
         try:
             for part in client.chat("gpt-oss:120b", messages=messages, stream=False):
                 if part[0] == "message":
-                    return json.loads(part[1]["content"])
+                    return part[1]["content"]
         except json.decoder.JSONDecodeError:
             logger.exception("Json轉dict失敗")
             return {"error": "Json轉dict失敗"}
