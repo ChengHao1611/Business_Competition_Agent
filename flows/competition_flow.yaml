@@ -45,5 +45,11 @@ states:
     node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_3_ImplementMethod"
   S1_1_4_end:
     node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_4_end"
+  S1_2_GenerateOutline:
+    node: "flows.nodes.s1.s1_2_confirm_outline.S1_2_GenerateOutline"
+  S1_2_1_AskOutline:
+    node: "flows.nodes.s1.s1_2_confirm_outline.S1_2_1_AskOutline"
+  S1_2_2_ConfirmOutline:
+    node: "flows.nodes.s1.s1_2_confirm_outline.S1_2_2_ConfirmOutline"
   S2_HaveProposal:
     node: "flows.nodes.s2.s2_have_proposal.S2_HaveProposal"

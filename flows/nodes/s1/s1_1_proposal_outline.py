@@ -90,8 +90,8 @@ class S1_1_4_end(StateNode):
         add_data = {"method": context.message}
 
         return Transition(
-            next_state="S1_1_2_TA",
+            next_state="S1_2_GenerateOutline",
             replies=[],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True,
         )
