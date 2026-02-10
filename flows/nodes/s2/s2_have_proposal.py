@@ -5,7 +5,7 @@ from core.flow.transition import Transition
 from core.flow.context import FlowContext, FlowDeps
 
 
-class S0Welcome(StateNode):
+class S2_HaveProposal(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
         reply = (

@@ -2,36 +2,38 @@ start_state: "S0_Welcome"
 fallback_state: "S0_Welcome"
 states:
   S0_Welcome:
-    node: "flows.nodes.s0_welcome.S0Welcome"
+    node: "flows.nodes.s0.s0_welcome.S0Welcome"
   S0_1_TeamInfo:
-    node: "flows.nodes.s0_1_team_info.S0_1_TeamInfo"
+    node: "flows.nodes.s0.s0_1_team_info.S0_1_TeamInfo"
   S0_1_1_TeamIdientity:
-    node: "flows.nodes.s0_1_team_info.S0_1_1_TeamIdientity"
+    node: "flows.nodes.s0.s0_1_team_info.S0_1_1_TeamIdientity"
   S0_1_2_TeamSize:
-    node: "flows.nodes.s0_1_team_info.S0_1_2_TeamSize"
+    node: "flows.nodes.s0.s0_1_team_info.S0_1_2_TeamSize"
   S0_1_3_TeamBackground:
-    node: "flows.nodes.s0_1_team_info.S0_1_3_TeamBackground"
+    node: "flows.nodes.s0.s0_1_team_info.S0_1_3_TeamBackground"
   S0_1_4_TeamHours:
-    node: "flows.nodes.s0_1_team_info.S0_1_4_TeamHours"
+    node: "flows.nodes.s0.s0_1_team_info.S0_1_4_TeamHours"
   S0_1_5_End:
-    node: "flows.nodes.s0_1_team_info.S0_1_5_End"
+    node: "flows.nodes.s0.s0_1_team_info.S0_1_5_End"
   S0_2_CompetitionInfo:
-    node: "flows.nodes.s0_2_competition_info.S0_2_CompetitionInfo"
+    node: "flows.nodes.s0.s0_2_competition_info.S0_2_CompetitionInfo"
   S0_2_1_GetCompetitionInfo:
-    node: "flows.nodes.s0_2_competition_info.S0_2_1_GetCompetitionInfo"
+    node: "flows.nodes.s0.s0_2_competition_info.S0_2_1_GetCompetitionInfo"
   S0_3_CompetitionFit:
-    node: "flows.nodes.s0_3_competition_fit.S0_3_CompetitionFit"
+    node: "flows.nodes.s0.s0_3_competition_fit.S0_3_CompetitionFit"
   S0_3_1_CompetitionFitRed:
-    node: "flows.nodes.s0_3_competition_fit.S0_3_1_CompetitionFitRed"
+    node: "flows.nodes.s0.s0_3_competition_fit.S0_3_1_CompetitionFitRed"
   S0_3_2_RedChoiceJudge:
-    node: "flows.nodes.s0_3_competition_fit.S0_3_2_RedChoiceJudge"
+    node: "flows.nodes.s0.s0_3_competition_fit.S0_3_2_RedChoiceJudge"
   S0_4_Requirement:
-    node: "flows.nodes.s0_4_requirement.S0_4_Requirement"
+    node: "flows.nodes.s0.s0_4_requirement.S0_4_Requirement"
   S0_4_1_RequirementJudge:
-    node: "flows.nodes.s0_4_requirement.S0_4_1_RequirementJudge"
+    node: "flows.nodes.s0.s0_4_requirement.S0_4_1_RequirementJudge"
   S0_5_UploadProposal:
-    node: "flows.nodes.s0_5_upload_proposal.S0_5_UploadProposal"
+    node: "flows.nodes.s0.s0_5_upload_proposal.S0_5_UploadProposal"
   S0_5_1_GetProposal:
-    node: "flows.nodes.s0_5_upload_proposal.S0_5_1_GetProposal"
+    node: "flows.nodes.s0.s0_5_upload_proposal.S0_5_1_GetProposal"
   S1_NoProposal:
-    node: "flows.nodes.s1_no_proposal.S1_NoProposal"
+    node: "flows.nodes.s1.s1_no_proposal.S1_NoProposal"
+  S2_HaveProposal:
+    node: "flows.nodes.s2.s2_have_proposal.S2_HaveProposal"
