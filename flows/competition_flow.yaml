@@ -35,5 +35,15 @@ states:
     node: "flows.nodes.s0.s0_5_upload_proposal.S0_5_1_GetProposal"
   S1_NoProposal:
     node: "flows.nodes.s1.s1_no_proposal.S1_NoProposal"
+  S1_1_ProposalOutline:
+    node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_ProposalOutline"
+  S1_1_1_QuestionType:
+    node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_1_QuestionType"
+  S1_1_2_TA:
+    node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_2_TA"
+  S1_1_3_ImplementMethod:
+    node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_3_ImplementMethod"
+  S1_1_4_end:
+    node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_4_end"
   S2_HaveProposal:
     node: "flows.nodes.s2.s2_have_proposal.S2_HaveProposal"

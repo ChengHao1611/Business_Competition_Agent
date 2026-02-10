@@ -13,8 +13,8 @@ class S1_NoProposal(StateNode):
         )
 
         return Transition(
-            next_state="S0_Welcome",
+            next_state="S1_1_ProposalOutline",
             replies=[reply],
-            auto_advance=False,
+            auto_advance=True,
         )
     
