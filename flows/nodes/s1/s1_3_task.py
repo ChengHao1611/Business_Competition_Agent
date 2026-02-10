@@ -86,8 +86,8 @@ class S1_3_5_TaskEnd(StateNode):
         add_data = {"benefit": context.message}
 
         return Transition(
-            next_state="S1_3_5_TaskEnd",
+            next_state="S2_HaveProposal",
             replies=[],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True,
         )

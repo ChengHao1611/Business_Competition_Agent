@@ -5,15 +5,13 @@ from core.flow.transition import Transition
 from core.flow.context import FlowContext, FlowDeps
 
 
-class S2_HaveProposal(StateNode):
+class S2_2_CompetitionIntrodution(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
-        reply = (
-            "接下來我會一步步引導你，整理出一個符合比賽需求的提案內容。"
-        )
+        reply = context.data["competition"]
 
         return Transition(
-            next_state="S2_1_PAndCFit",
+            next_state="S2_2_CompetitionIntrodution",
             replies=[reply],
-            auto_advance=True,
+            auto_advance=False,
         )

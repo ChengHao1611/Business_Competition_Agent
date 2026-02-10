@@ -65,3 +65,11 @@ states:
     node: "flows.nodes.s1.s1_3_task.S1_3_5_TaskEnd"
   S2_HaveProposal:
     node: "flows.nodes.s2.s2_have_proposal.S2_HaveProposal"
+  S2_1_PAndCFit:
+    node: "flows.nodes.s2.s2_1_proposal_and_competition_fit.S2_1_PAndCFit"
+  S2_1_1_PAndCFitRed:
+    node: "flows.nodes.s2.s2_1_proposal_and_competition_fit.S2_1_1_PAndCFitRed"
+  S2_1_2_PAndCCheckRed:
+    node: "flows.nodes.s2.s2_1_proposal_and_competition_fit.S2_1_2_PAndCCheckRed"
+  S2_2_CompetitionIntrodution:
+    node: "flows.nodes.s2.s2_2_competition_introdution.S2_2_CompetitionIntrodution"
