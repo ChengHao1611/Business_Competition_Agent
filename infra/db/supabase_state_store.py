@@ -29,8 +29,19 @@ class SupabaseStateStore(StateStore):
             "line_name": user_name,
             "current_state": self._start_state,
             "data": {
-                "team_name": "AI小隊",
-                "has_proposal": False,
+                "team_identity": "",
+                "team_size": "",
+                "team_background": "",
+                "team_hours": "",
+                "competition": "",
+                "competition_fit": "",
+                "proposal": "",
+                "question_type": "",
+                "TA": "",
+                "method": "",
+                "three_outline": "",
+                "pain_point": "",
+                "benefit": "",
             },
         }
         self._supabase.table(self._table).insert(data).execute()

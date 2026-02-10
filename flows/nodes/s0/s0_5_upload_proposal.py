@@ -22,7 +22,7 @@ class S0_5_UploadProposal(StateNode):
 class S0_5_1_GetProposal(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
-        add_data = context.message
+        add_data = {"proposal": context.message}
 
         return Transition(
             next_state="S2_HaveProposal",

@@ -51,5 +51,17 @@ states:
     node: "flows.nodes.s1.s1_2_confirm_outline.S1_2_1_AskOutline"
   S1_2_2_ConfirmOutline:
     node: "flows.nodes.s1.s1_2_confirm_outline.S1_2_2_ConfirmOutline"
+  S1_3_Task:
+    node: "flows.nodes.s1.s1_3_task.S1_3_Task"
+  S1_3_1_TaskTA:
+    node: "flows.nodes.s1.s1_3_task.S1_3_1_TaskTA"
+  S1_3_2_TaskPainPoint:
+    node: "flows.nodes.s1.s1_3_task.S1_3_2_TaskPainPoint"
+  S1_3_3_TaskMethod:
+    node: "flows.nodes.s1.s1_3_task.S1_3_3_TaskMethod"
+  S1_3_4_TaskBenefit:
+    node: "flows.nodes.s1.s1_3_task.S1_3_4_TaskBenefit"
+  S1_3_5_TaskEnd:
+    node: "flows.nodes.s1.s1_3_task.S1_3_5_TaskEnd"
   S2_HaveProposal:
     node: "flows.nodes.s2.s2_have_proposal.S2_HaveProposal"

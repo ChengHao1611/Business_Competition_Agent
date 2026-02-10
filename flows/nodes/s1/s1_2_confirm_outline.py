@@ -59,8 +59,8 @@ class S1_2_2_ConfirmOutline(StateNode):
         add_data = {"choose_outline": context.message}
 
         return Transition(
-            next_state="S1_2_2_ConfirmOutline",
+            next_state="S1_3_Task",
             replies=[],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True,
         )  
