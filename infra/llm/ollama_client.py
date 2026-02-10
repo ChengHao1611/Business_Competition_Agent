@@ -16,7 +16,7 @@ class OllamaClient(LLMClient):
     def __init__(self):
         self._api_key = settings.get_env("OLLAMA_API_KEY") or ""
 
-    def send_messages(self, messages: list[dict[str, str]]) -> dict:
+    def send_messages(self, messages: list[dict[str, str]]) -> str:
         client = Client(
             host="https://ollama.com",
             headers={"Authorization": "Bearer " + self._api_key},
@@ -27,12 +27,9 @@ class OllamaClient(LLMClient):
             for part in client.chat("gpt-oss:120b", messages=messages, stream=False):
                 if part[0] == "message":
                     return part[1]["content"]
-        except json.decoder.JSONDecodeError:
-            logger.exception("Json轉dict失敗")
-            return {"error": "Json轉dict失敗"}
         except Exception as e:
             _error_process(e)
-            return {"error": "LLM接收/回覆出現問題"}
+            return "LLM接收/回覆出現問題"
 
 
 def _error_process(e: Exception) -> None:

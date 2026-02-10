@@ -5,6 +5,6 @@ from abc import ABC, abstractmethod
 
 class LLMClient(ABC):
     @abstractmethod
-    def send_messages(self, messages: list[dict[str, str]]) -> dict:
+    def send_messages(self, messages: list[dict[str, str]]) -> str:
         raise NotImplementedError
 
