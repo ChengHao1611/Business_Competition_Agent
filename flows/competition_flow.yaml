@@ -29,3 +29,9 @@ states:
     node: "flows.nodes.s0_4_requirement.S0_4_Requirement"
   S0_4_1_RequirementJudge:
     node: "flows.nodes.s0_4_requirement.S0_4_1_RequirementJudge"
+  S0_5_UploadProposal:
+    node: "flows.nodes.s0_5_upload_proposal.S0_5_UploadProposal"
+  S0_5_1_GetProposal:
+    node: "flows.nodes.s0_5_upload_proposal.S0_5_1_GetProposal"
+  S1_NoProposal:
+    node: "flows.nodes.s1_no_proposal.S1_NoProposal"

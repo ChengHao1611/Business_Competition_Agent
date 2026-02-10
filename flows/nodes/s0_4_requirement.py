@@ -28,10 +28,10 @@ class S0_4_1_RequirementJudge(StateNode):
         message = context.message
 
         if message == "1":
-            next_state = "S1"
+            next_state = "S0_5_UploadProposal"
             auto_advance = True
         elif message == "2":
-            next_state = "S0_5"
+            next_state = "S1_NoProposal"
             auto_advance = True
         else:
             logger.warning(f"{context.user_id} 的選擇錯誤")
