@@ -11,7 +11,7 @@ class S2_2_CompetitionIntrodution(StateNode):
         reply = context.data["competition"]
 
         return Transition(
-            next_state="S2_2_CompetitionIntrodution",
+            next_state="S3_CompetitionQuiz",
             replies=[reply],
-            auto_advance=False,
+            auto_advance=True,
         )

@@ -50,7 +50,7 @@ class S2_1_PAndCFit(StateNode):
             next_state = "S2_1_1_PAndCFitRed"
         else:
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
-            next_state = "S0_Welcome" ##TODO
+            next_state = "S2_1_PAndCFit" ##TODO
 
         return Transition(
             next_state=next_state,

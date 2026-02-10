@@ -73,3 +73,7 @@ states:
     node: "flows.nodes.s2.s2_1_proposal_and_competition_fit.S2_1_2_PAndCCheckRed"
   S2_2_CompetitionIntrodution:
     node: "flows.nodes.s2.s2_2_competition_introdution.S2_2_CompetitionIntrodution"
+  S3_CompetitionQuiz:
+    node: "flows.nodes.s2.s2_3_competition_quiz.S3_CompetitionQuiz"
+  S2_3_1_JudgeCompetitionQuiz:
+    node: "flows.nodes.s2.s2_3_competition_quiz.S2_3_1_JudgeCompetitionQuiz"
