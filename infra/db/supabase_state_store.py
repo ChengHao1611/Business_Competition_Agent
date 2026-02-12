@@ -4,7 +4,7 @@ import logging
 from typing import Any
 
 from supabase import create_client
-
+from postgrest.exceptions import APIError
 from config import settings
 from core.ports.state_store import StateStore
 
@@ -42,6 +42,9 @@ class SupabaseStateStore(StateStore):
                 "three_outline": "",
                 "pain_point": "",
                 "benefit": "",
+                "competition_quiz": "",
+                "quiz_answer": "",
+                "alignment_history":[]
             },
         }
         self._supabase.table(self._table).insert(data).execute()
@@ -54,14 +57,18 @@ class SupabaseStateStore(StateStore):
                 .table(self._table)
                 .select("current_state")
                 .eq("line_id", user_id)
-                .single()
                 .execute()
             )
-            return res.data["current_state"]
-        except Exception:
-            logger.warning("user missing; creating user: %s", user_id)
-            self._create_user(user_id, user_name)
-            return self._start_state
+        except APIError as e:
+            logger.exception("supabase get_state failed: %s", e)
+            raise
+
+        if res.data:
+            return res.data[0]["current_state"]
+
+        logger.info("user missing; creating user: %s", user_id)
+        self._create_user(user_id, user_name)
+        return self._start_state
 
     def set_state(self, user_id: str, new_state: str) -> None:
         (
