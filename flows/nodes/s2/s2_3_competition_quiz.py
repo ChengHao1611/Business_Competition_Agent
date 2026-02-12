@@ -8,7 +8,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class S3_CompetitionQuiz(StateNode):
+class S2_3_CompetitionQuiz(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
         competition_info = context.data["competition"]
@@ -85,16 +85,18 @@ class S2_3_1_JudgeCompetitionQuiz(StateNode):
         verdict = match.group(1) if match else None
 
         if verdict == "理解":
-            next_state = "S2_2_CompetitionIntrodution"
+            next_state = "S2_4_ProposalAlignment"
         elif verdict == "不理解":
-            next_state = "S3_CompetitionQuiz"
+            next_state = "S2_3_CompetitionQuiz"
         else:
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
-            next_state = "S2_3_1_JudgeCompetitionQuiz" ##TODO
+            next_state = "S2_3_CompetitionQuiz" 
 
+        add_data = {"quiz_answer": context.message}
 
         return Transition(
             next_state=next_state,
             replies=[reply],
-            auto_advance=False,
+            data_delta=add_data,
+            auto_advance=True,
         )
