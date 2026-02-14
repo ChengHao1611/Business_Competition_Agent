@@ -79,9 +79,11 @@ states:
     node: "flows.nodes.s2.s2_3_competition_quiz.S2_3_1_JudgeCompetitionQuiz"
   S2_4_ProposalAlignment:
     node: "flows.nodes.s2.s2_4_proposal_alignment.S2_4_ProposalAlignment"
-  S2_4_1ProposalGreen:
-    node: "flows.nodes.s2.s2_4_proposal_alignment.S2_4_1ProposalGreen"
+  S2_4_1_ProposalGreen:
+    node: "flows.nodes.s2.s2_4_proposal_alignment.S2_4_1_ProposalGreen"
   S2_4_1_1_CheckSelection:
     node: "flows.nodes.s2.s2_4_proposal_alignment.S2_4_1_1_CheckSelection"
   S2_4_1_2_GetModifyContent:
     node: "flows.nodes.s2.s2_4_proposal_alignment.S2_4_1_2_GetModifyContent"
+  S2_4_2_ProposalRed:
+    node: "flows.nodes.s2.s2_4_proposal_alignment.S2_4_2_ProposalRed"

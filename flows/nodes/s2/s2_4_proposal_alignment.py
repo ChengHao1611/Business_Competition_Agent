@@ -64,15 +64,15 @@ class S2_4_ProposalAlignment(StateNode):
         verdict = match.group(1) if match else None
 
         if verdict == "綠燈":
-            next_state = "S2_4_1ProposalGreen"
-        elif verdict == "紅燈": ##TODO
-            next_state = "S2_4_1ProposalGreen"
+            next_state = "S2_4_1_ProposalGreen"
+        elif verdict == "紅燈": 
+            next_state = "S2_4_2_ProposalRed"
         else:
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
-            next_state = "S3_CompetitionQuiz"
+            next_state = "S3_Proposal"
 
         messages = {
-            "role": "system",
+            "role": "assistant",
             "content": reply_text
         }
 
@@ -86,7 +86,7 @@ class S2_4_ProposalAlignment(StateNode):
             auto_advance=True,
         )
     
-class S2_4_1ProposalGreen(StateNode):
+class S2_4_1_ProposalGreen(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
         reply = (
@@ -145,4 +145,18 @@ class S2_4_1_2_GetModifyContent(StateNode):
             replies=[],
             data_delta=add_data,
             auto_advance=True,
+        )
+
+class S2_4_2_ProposalRed(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        reply = (
+            "目前你的計畫書對齊結果是紅燈，還有需要調整的重點。\n"
+            "請回覆你修改後的內容（可只針對剛剛提到的項目），我會再幫你檢視是否已對齊競賽要求。"
+        )
+
+        return Transition(
+            next_state="S2_4_1_2_GetModifyContent",
+            replies=[reply],
+            auto_advance=False,
         )
