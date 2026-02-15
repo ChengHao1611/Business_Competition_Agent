@@ -40,6 +40,7 @@ class SupabaseStateStore(StateStore):
                 "TA": "",
                 "method": "",
                 "three_outline": "",
+                "choose_outline": "",
                 "pain_point": "",
                 "benefit": "",
                 "competition_quiz": "",
