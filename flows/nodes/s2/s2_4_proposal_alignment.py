@@ -69,7 +69,7 @@ class S2_4_ProposalAlignment(StateNode):
             next_state = "S2_4_2_ProposalRed"
         else:
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
-            next_state = "S2_3_CompetitionQuiz"
+            next_state = "S2_4_2_ProposalRed"
 
         messages = {
             "role": "assistant",
@@ -92,7 +92,7 @@ class S2_4_1_ProposalGreen(StateNode):
         reply = (
             "目前你的計畫書對齊結果是綠燈，已經符合這個競賽的基本要求。\n"
             "接下來你可以選擇要繼續優化計畫內容，或是直接和老師討論。\n"
-            "請回覆「1、2」：\n"
+            "請回覆「1/2」：\n"
             "1 繼續修改計畫書\n"
             "2 和老師預約時間討論"
         )
@@ -119,7 +119,9 @@ class S2_4_1_1_CheckSelection(StateNode):
         else:
             logger.warning(f"{context.user_id} 的選擇錯誤")
             next_state = "S2_4_1_1_CheckSelection"
-            reply = "選擇錯誤，請重新輸入"
+            reply = ("請回覆「1/2」：\n"
+                     "1 繼續修改計畫書\n"
+                     "2 和老師預約時間討論")
             auto_advance = False
 
         return Transition(
@@ -130,7 +132,6 @@ class S2_4_1_1_CheckSelection(StateNode):
     
 class S2_4_1_2_GetModifyContent(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
-        logging.info("執行S2_4_1_2_GetModifyContent")
         message = context.message
 
         history:list = context.data["alignment_history"]
