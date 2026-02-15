@@ -69,7 +69,7 @@ class S2_4_ProposalAlignment(StateNode):
             next_state = "S2_4_2_ProposalRed"
         else:
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
-            next_state = "S3_Proposal"
+            next_state = "S2_3_CompetitionQuiz"
 
         messages = {
             "role": "assistant",
@@ -113,8 +113,8 @@ class S2_4_1_1_CheckSelection(StateNode):
             next_state = "S2_4_1_2_GetModifyContent"
             reply = "請輸入想修改的內容，讓我幫助你對齊計劃書"
             auto_advance = False
-        elif message == "2": ##TODO
-            next_state = "S0_Welcome"
+        elif message == "2":
+            next_state = "S2_5_Proposal"
             auto_advance = True
         else:
             logger.warning(f"{context.user_id} 的選擇錯誤")

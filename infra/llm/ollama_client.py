@@ -26,6 +26,7 @@ class OllamaClient(LLMClient):
         try:
             for part in client.chat("gpt-oss:120b", messages=messages, stream=False):
                 if part[0] == "message":
+                    logger.info(part)
                     return part[1]["content"]
         except Exception as e:
             _error_process(e)

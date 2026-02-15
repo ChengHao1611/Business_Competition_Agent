@@ -44,7 +44,8 @@ class SupabaseStateStore(StateStore):
                 "benefit": "",
                 "competition_quiz": "",
                 "quiz_answer": "",
-                "alignment_history":[]
+                "alignment_history":[],
+                "proposal_integration": ""
             },
         }
         self._supabase.table(self._table).insert(data).execute()

@@ -87,3 +87,7 @@ states:
     node: "flows.nodes.s2.s2_4_proposal_alignment.S2_4_1_2_GetModifyContent"
   S2_4_2_ProposalRed:
     node: "flows.nodes.s2.s2_4_proposal_alignment.S2_4_2_ProposalRed"
+  S2_5_Proposal:
+    node: "flows.nodes.s2.s2_5_proposal.S2_5_Proposal"
+  S2_6_Apointment:
+    node: "flows.nodes.s2.s2_6_appointment.S2_6_Apointment"
