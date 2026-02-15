@@ -30,7 +30,10 @@ class MessageService:
             message=text,
             user_name=user_name,
         )
-        replies = transition.replies
+        replies: list[str] = []
+        for reply in transition.replies:
+            if reply and reply.strip():
+                replies.append(reply)
         if not replies:
             return ""
 
@@ -66,7 +69,10 @@ class MessageService:
             user_name=user_name,
             metadata={"pdf_path": file_path, "pdf_text_len": len(text)},
         )
-        replies = transition.replies
+        replies: list[str] = []
+        for reply in transition.replies:
+            if reply and reply.strip():
+                replies.append(reply)
         if not replies:
             return ""
 
