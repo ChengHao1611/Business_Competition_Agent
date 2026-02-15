@@ -83,7 +83,7 @@ class S0_3_1_CompetitionFitRed(StateNode):
         reply = (
             "這個競賽在資格或需求上，與你們團隊目前的條件不太相符，參賽風險較高。\n"
             "接下來請告訴我你想怎麼做，我會依你的選擇繼續協助你。\n"
-            "請回覆1或2：\n"
+            "請回覆「1/2」：\n"
             "1 重新尋找其他更適合的競賽\n"
             "2 即使風險較高，仍想嘗試參加這個競賽\n"
         )
@@ -108,7 +108,7 @@ class S0_3_2_RedChoiceJudge(StateNode):
         else:
             logger.warning(f"{context.user_id} 的選擇錯誤")
             next_state = "S0_3_2_RedChoiceJudge"
-            reply = ("請回覆1或2：\n"
+            reply = ("請回覆「1/2」：\n"
                     "1 重新尋找其他更適合的競賽\n"
                     "2 即使風險較高，仍想嘗試參加這個競賽\n")
             auto_advance = False

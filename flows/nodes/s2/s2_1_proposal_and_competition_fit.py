@@ -50,7 +50,7 @@ class S2_1_PAndCFit(StateNode):
             next_state = "S2_1_1_PAndCFitRed"
         else:
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
-            next_state = "S2_1_PAndCFit" ##TODO
+            next_state = "S2_1_1_PAndCFitRed"
 
         return Transition(
             next_state=next_state,
@@ -64,7 +64,7 @@ class S2_1_1_PAndCFitRed(StateNode):
         reply = (
             "根據目前的資訊判斷，你們的團隊與這個競賽的條件不太相符，若繼續參加，被淘汰的風險會比較高。\n"
             "不過接下來怎麼做，還是由你來決定，我都可以協助你。\n"
-            "請選擇你接下來想做的事，回覆「1、2」即可：\n"
+            "請選擇你接下來想做的事，回覆「1/2」即可：\n"
             "1 繼續參加這個競賽\n"
             "2 重新尋找其他更適合的競賽\n"
         )
@@ -78,6 +78,7 @@ class S2_1_1_PAndCFitRed(StateNode):
 class S2_1_2_PAndCCheckRed(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
         message = context.message
+        reply = ""
 
         if message == "1":
             next_state = "S2_2_CompetitionIntrodution"
@@ -88,11 +89,14 @@ class S2_1_2_PAndCCheckRed(StateNode):
         else:
             logger.warning(f"{context.user_id} 的選擇錯誤")
             next_state = "S2_1_2_PAndCCheckRed"
+            reply = ("請回覆「1、2」：\n"
+                     "1 繼續參加這個競賽\n"
+                     "2 重新尋找其他更適合的競賽\n")
             auto_advance = False
 
         return Transition(
             next_state=next_state,
-            replies=[],
+            replies=[reply],
             auto_advance=auto_advance,
         )
 
