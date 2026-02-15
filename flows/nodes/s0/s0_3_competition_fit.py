@@ -23,7 +23,7 @@ class S0_3_CompetitionFit(StateNode):
         messages: list[dict[str,str]] = [{
             "role": "system",
             "content": ("幫我整理比賽內容，這是要給不知道這個比賽的人，一看就能完全理解這個競賽在做什麼"
-                        "，只能使用文字黨的格式")
+                        "，只能使用文字檔的格式")
         },{
             "role": "user",
             "content": competition_info
@@ -63,7 +63,7 @@ class S0_3_CompetitionFit(StateNode):
             next_state = "S0_3_1_CompetitionFitRed"
         else:
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
-            next_state = "S0_Welcome" ##TODO
+            next_state = "S0_3_1_CompetitionFitRed"
 
         add_data = {
             "competition": competition_info,
@@ -97,6 +97,7 @@ class S0_3_1_CompetitionFitRed(StateNode):
 class S0_3_2_RedChoiceJudge(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
         message = context.message
+        reply = ""
 
         if message == "1":
             next_state = "S0_Welcome"
@@ -107,10 +108,13 @@ class S0_3_2_RedChoiceJudge(StateNode):
         else:
             logger.warning(f"{context.user_id} 的選擇錯誤")
             next_state = "S0_3_2_RedChoiceJudge"
+            reply = ("請回覆1或2：\n"
+                    "1 重新尋找其他更適合的競賽\n"
+                    "2 即使風險較高，仍想嘗試參加這個競賽\n")
             auto_advance = False
 
         return Transition(
             next_state=next_state,
-            replies=[],
+            replies=[reply],
             auto_advance=auto_advance,
         )
