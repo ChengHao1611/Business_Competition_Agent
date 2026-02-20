@@ -28,6 +28,7 @@ class SupabaseStateStore(StateStore):
             "line_id": user_id,
             "line_name": user_name,
             "current_state": self._start_state,
+            "lock": False,
             "data": {
                 "team_identity": "",
                 "team_size": "",
@@ -106,3 +107,59 @@ class SupabaseStateStore(StateStore):
             .execute()
         )
 
+    def acquire_lock(self, user_id: str, user_name: str = "") -> bool:
+        try:
+            res = (
+                self._supabase
+                .table(self._table)
+                .update({"lock": True})
+                .eq("line_id", user_id)
+                .eq("lock", False)
+                .execute()
+            )
+        except APIError as e:
+            logger.exception("supabase acquire_lock failed: %s", e)
+            raise
+
+        if res.data:
+            return True
+
+        try:
+            exists = (
+                self._supabase
+                .table(self._table)
+                .select("line_id")
+                .eq("line_id", user_id)
+                .execute()
+            )
+        except APIError as e:
+            logger.exception("supabase acquire_lock failed: %s", e)
+            raise
+
+        if not exists.data:
+            logger.info("user missing; creating user: %s", user_id)
+            self._create_user(user_id, user_name)
+            try:
+                res = (
+                    self._supabase
+                    .table(self._table)
+                    .update({"lock": True})
+                    .eq("line_id", user_id)
+                    .eq("lock", False)
+                    .execute()
+                )
+            except APIError as e:
+                logger.exception("supabase acquire_lock failed: %s", e)
+                raise
+            return bool(res.data)
+
+        return False
+
+    def set_lock(self, user_id: str, new_lock: bool) -> None:
+        (
+            self._supabase
+            .table(self._table)
+            .update({"lock": new_lock})
+            .eq("line_id", user_id)
+            .execute()
+        )

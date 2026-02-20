@@ -21,3 +21,11 @@ class StateStore(ABC):
     def update_context(self, user_id: str, delta: dict[str, Any]) -> None:
         raise NotImplementedError
 
+    @abstractmethod
+    def acquire_lock(self, user_id: str, user_name: str = "") -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def set_lock(self, user_id: str, new_lock: bool) -> None:
+        raise NotImplementedError
+

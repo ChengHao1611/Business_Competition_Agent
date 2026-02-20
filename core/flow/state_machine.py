@@ -3,7 +3,9 @@ from __future__ import annotations
 from core.flow.context import FlowContext, FlowDeps
 from core.flow.registry import FlowRegistry
 from core.flow.transition import Transition
+import logging
 
+logger = logging.getLogger(__name__)
 
 class StateMachine:
     def __init__(self, registry: FlowRegistry, deps: FlowDeps, max_steps: int = 10):
@@ -27,6 +29,7 @@ class StateMachine:
             if node is None:
                 raise ValueError(f"unknown state: {state}")
 
+            logging.info(f"{context.user_id} 進入 {state}")
             transition = node.execute(context, self._deps)
 
             replies.extend(transition.replies)
