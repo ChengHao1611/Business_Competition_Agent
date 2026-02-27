@@ -64,6 +64,9 @@ def callback():
         abort(400)
     return "OK"
 
+@app.route("/")
+def home():
+    return "OK", 200
 
 @handler.add(FollowEvent)
 def handle_follow(event):
