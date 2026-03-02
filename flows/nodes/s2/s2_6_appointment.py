@@ -13,7 +13,7 @@ class S2_6_Apointment(StateNode):
         )
 
         return Transition(
-            next_state="S2_6_Apointment",
+            next_state="S0_Welcome",
             replies=[reply],
-            auto_advance=False,
+            auto_advance=True,
         )
