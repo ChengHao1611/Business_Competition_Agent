@@ -5,6 +5,10 @@ states:
     node: "flows.nodes.s0.s0_welcome.S0Welcome"
   S0_1_TeamInfo:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_TeamInfo"
+  ContactPerson:
+    node: "flows.nodes.s0.s0_1_team_info.ContactPerson"
+  ContactEmail:
+    node: "flows.nodes.s0.s0_1_team_info.ContactEmail"
   S0_1_1_TeamIdientity:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_1_TeamIdientity"
   S0_1_2_TeamSize:

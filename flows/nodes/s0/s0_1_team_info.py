@@ -13,9 +13,36 @@ class S0_1_TeamInfo(StateNode):
         )   
 
         return Transition(
-            next_state="S0_1_1_TeamIdientity",
+            next_state="ContactPerson",
             replies=[reply],
             auto_advance=True,
+        )
+    
+class ContactPerson(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        reply = (
+            "如果後續有需要請老師輔導，請告訴我該你的【稱呼】，以便讓老師知道你是誰，若無需輔導，則填無"
+        )   
+
+        return Transition(
+            next_state="ContactEmail",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class ContactEmail(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+        reply = (
+            "如果後續有需要請老師輔導，請告訴我該你的【email】，以便讓老師聯絡你，若無需輔導，則填無"
+        )   
+
+        add_data = {"contact_person": context.message}
+
+        return Transition(
+            next_state="S0_1_1_TeamIdientity",
+            replies=[reply],
+            data_delta=add_data,
+            auto_advance=False,
         )
 
 class S0_1_1_TeamIdientity(StateNode):
@@ -24,9 +51,12 @@ class S0_1_1_TeamIdientity(StateNode):
             "你們的身份(學生團隊/社會人士/混合/不確定)"
         )   
 
+        add_data = {"contact_email": context.message}
+
         return Transition(
             next_state="S0_1_2_TeamSize",
             replies=[reply],
+            data_delta=add_data,
             auto_advance=False,
         )
 

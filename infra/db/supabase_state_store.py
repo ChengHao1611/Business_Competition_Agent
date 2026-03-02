@@ -30,6 +30,8 @@ class SupabaseStateStore(StateStore):
             "current_state": self._start_state,
             "lock": False,
             "data": {
+                "contact_person": "",
+                "contact_email": "",
                 "team_identity": "",
                 "team_size": "",
                 "team_background": "",
