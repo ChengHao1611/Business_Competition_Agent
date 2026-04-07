@@ -36,6 +36,8 @@ class S2_3_CompetitionQuiz(StateNode):
             "接下來我會問你幾個簡單的問題，確認你是否已經了解這個競賽的重點與方向。\n"
             "這不是考試，只是幫我們確定後續準備不會走錯方向。\n"
             f"{llm_reply}"
+            "\n\n"
+            "請一次打完再回覆。"
         )
 
         add_data = {"competition_quiz": llm_reply}
@@ -54,12 +56,14 @@ class S2_3_1_JudgeCompetitionQuiz(StateNode):
 
         messages = [{
             "role": "system",
-            "content": "你是一位競賽顧問，負責判斷使用者是否理解這個競賽在做什麼。\n"
+            "content":  "你是一位競賽顧問，負責判斷使用者是否理解這個競賽在做什麼。\n"
+                        "使用者不用詳細回答才算理解，只需要確認使用者有抓到重點即可。\n"
                         "請根據【競賽資訊】與【使用者對三個問題的回答】，進行判斷。\n"
                         "請評估使用者是否：\n"
                         "- 理解競賽的核心目的\n"
                         "- 知道競賽主要在找什麼樣的提案\n"
                         "- 沒有明顯誤解競賽方向\n"
+                        
 
                         "問題:\n"
                         f"{question}"

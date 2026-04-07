@@ -120,7 +120,7 @@ class StoreTeamSize(StateNode):
 class S0_1_3_TeamBackground(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
         reply = (
-            "成員學校/系所背景"
+            "成員的學校/系所背景或在職的工作職位"
         )   
 
         return Transition(
@@ -145,7 +145,7 @@ class StoreTeamBackground(StateNode):
 class S0_1_4_TeamHours(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
         reply = (
-            "每週可投入的準備時間(團隊總和)"
+            "團隊每週可投入的準備時間(團隊總和)"
         )   
 
         return Transition(
