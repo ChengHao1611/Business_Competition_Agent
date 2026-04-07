@@ -11,9 +11,7 @@ class S2_5_Proposal(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
         competition_info = context.data["competition"]
-        proposal_info = ("Ta: %s, method: %s, pain_point: %s, benefit: %s, proposal: %s",
-                         context.data["TA"], context.data["method"], context.data["pain_point"],
-                         context.data["benefit"], context.data["proposal"])
+        proposal_info = str(context.data["proposal"])
         history:list = context.data["alignment_history"]
 
         messages = [{

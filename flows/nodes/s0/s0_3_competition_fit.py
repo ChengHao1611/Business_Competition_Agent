@@ -15,14 +15,15 @@ class S0_3_CompetitionFit(StateNode):
         if msg.startswith("http"):
             competition_info = deps.web_fetcher.fetch_page_text(msg)
         else:
-            competition_info = deps.web_fetcher.search_competition(msg)
+            #competition_info = deps.web_fetcher.search_competition(msg)
+            competition_info = context.message
 
         competition_info = str(competition_info)
 
         ## 整理競賽資訊
         messages: list[dict[str,str]] = [{
             "role": "system",
-            "content": ("幫我整理比賽內容，這是要給不知道這個比賽的人，一看就能完全理解這個競賽在做什麼"
+            "content":  ("整理比賽內容，要給不知道這個比賽的人，一看就能完全理解這個競賽在做什麼"
                         "，只能使用文字檔的格式")
         },{
             "role": "user",
@@ -66,8 +67,7 @@ class S0_3_CompetitionFit(StateNode):
             next_state = "S0_3_1_CompetitionFitRed"
 
         add_data = {
-            "competition": competition_info,
-            "competition_fit": reply_text,
+            "competition": competition_info
         }
        
         return Transition(

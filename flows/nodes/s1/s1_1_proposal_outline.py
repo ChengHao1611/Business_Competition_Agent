@@ -36,9 +36,22 @@ class S1_1_1_QuestionType(StateNode):
         )
 
         return Transition(
-            next_state="S1_1_2_TA",
+            next_state="StoreQuestionType",
             replies=[reply],
             auto_advance=False,
+        )
+    
+class StoreQuestionType(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        proposal = context.data["proposal"]
+        add_data = {"proposal": proposal + ["question_type: " + context.message]}
+
+        return Transition(
+            next_state="S1_1_2_TA",
+            replies=[],
+            data_delta=add_data,
+            auto_advance=True,
         )
     
 class S1_1_2_TA(StateNode):
@@ -52,13 +65,23 @@ class S1_1_2_TA(StateNode):
             "其他（請用文字說明）"
         )
 
-        add_data = {"question_type": context.message}
+        return Transition(
+            next_state="StoreTA",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class StoreTA(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        proposal = context.data["proposal"]
+        add_data = {"proposal": proposal + ["TA: " + context.message]}
 
         return Transition(
             next_state="S1_1_3_ImplementMethod",
-            replies=[reply],
+            replies=[],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True,
         )
     
 class S1_1_3_ImplementMethod(StateNode):
@@ -75,19 +98,17 @@ class S1_1_3_ImplementMethod(StateNode):
             "其他（請用文字說明）"
         )
 
-        add_data = {"TA": context.message}
-
         return Transition(
-            next_state="S1_1_4_end",
+            next_state="StoreImplementMethod",
             replies=[reply],
-            data_delta=add_data,
             auto_advance=False,
         )
-    
-class S1_1_4_end(StateNode):
+
+class StoreImplementMethod(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
-        add_data = {"method": context.message}
+        proposal = context.data["proposal"]
+        add_data = {"proposal": proposal + ["implement_method: " + context.message]}
 
         return Transition(
             next_state="S1_2_GenerateOutline",

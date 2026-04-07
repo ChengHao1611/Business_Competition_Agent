@@ -32,22 +32,23 @@ class SupabaseStateStore(StateStore):
             "data": {
                 "contact_person": "",
                 "contact_email": "",
-                "team_identity": "",
-                "team_size": "",
-                "team_background": "",
-                "team_hours": "",
+                "team_info": [],
+                "team_identity": "",#delete
+                "team_size": "",#delete
+                "team_background": "",#delete
+                "team_hours": "",#delete
                 "competition": "",
-                "competition_fit": "",
-                "proposal": "",
+                "competition_fit": "", #delete
+                "proposal": [],
                 "question_type": "",
                 "TA": "",
                 "method": "",
                 "three_outline": "",
                 "choose_outline": "",
-                "pain_point": "",
-                "benefit": "",
+                "pain_point": "", #delete
+                "benefit": "", #check
                 "competition_quiz": "",
-                "quiz_answer": "",
+                "quiz_answer": "", #delete
                 "alignment_history":[],
                 "proposal_integration": ""
             },

@@ -7,16 +7,28 @@ states:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_TeamInfo"
   ContactPerson:
     node: "flows.nodes.s0.s0_1_team_info.ContactPerson"
+  StoreContactPerson:
+    node: "flows.nodes.s0.s0_1_team_info.StoreContactPerson"
   ContactEmail:
     node: "flows.nodes.s0.s0_1_team_info.ContactEmail"
+  StoreContactEmail:
+    node: "flows.nodes.s0.s0_1_team_info.StoreContactEmail"
   S0_1_1_TeamIdientity:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_1_TeamIdientity"
+  StoreTeamIdentity:
+    node: "flows.nodes.s0.s0_1_team_info.StoreTeamIdentity"
   S0_1_2_TeamSize:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_2_TeamSize"
+  StoreTeamSize:
+    node: "flows.nodes.s0.s0_1_team_info.StoreTeamSize"
   S0_1_3_TeamBackground:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_3_TeamBackground"
+  StoreTeamBackground:
+    node: "flows.nodes.s0.s0_1_team_info.StoreTeamBackground"
   S0_1_4_TeamHours:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_4_TeamHours"
+  StoreTeamHours:
+    node: "flows.nodes.s0.s0_1_team_info.StoreTeamHours"
   S0_1_5_End:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_5_End"
   S0_2_CompetitionInfo:
@@ -43,12 +55,16 @@ states:
     node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_ProposalOutline"
   S1_1_1_QuestionType:
     node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_1_QuestionType"
+  StoreQuestionType:
+    node: "flows.nodes.s1.s1_1_proposal_outline.StoreQuestionType"
   S1_1_2_TA:
     node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_2_TA"
+  StoreTA:
+    node: "flows.nodes.s1.s1_1_proposal_outline.StoreTA"
   S1_1_3_ImplementMethod:
     node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_3_ImplementMethod"
-  S1_1_4_end:
-    node: "flows.nodes.s1.s1_1_proposal_outline.S1_1_4_end"
+  StoreImplementMethod:
+    node: "flows.nodes.s1.s1_1_proposal_outline.StoreImplementMethod"
   S1_2_GenerateOutline:
     node: "flows.nodes.s1.s1_2_confirm_outline.S1_2_GenerateOutline"
   S1_2_1_AskOutline:
@@ -59,14 +75,20 @@ states:
     node: "flows.nodes.s1.s1_3_task.S1_3_Task"
   S1_3_1_TaskTA:
     node: "flows.nodes.s1.s1_3_task.S1_3_1_TaskTA"
+  StoreTaskTA:
+    node: "flows.nodes.s1.s1_3_task.StoreTaskTA"
   S1_3_2_TaskPainPoint:
     node: "flows.nodes.s1.s1_3_task.S1_3_2_TaskPainPoint"
+  StoreTaskPainPoint:
+    node: "flows.nodes.s1.s1_3_task.StoreTaskPainPoint"
   S1_3_3_TaskMethod:
     node: "flows.nodes.s1.s1_3_task.S1_3_3_TaskMethod"
+  StoreTaskMethod:
+    node: "flows.nodes.s1.s1_3_task.StoreTaskMethod"
   S1_3_4_TaskBenefit:
     node: "flows.nodes.s1.s1_3_task.S1_3_4_TaskBenefit"
-  S1_3_5_TaskEnd:
-    node: "flows.nodes.s1.s1_3_task.S1_3_5_TaskEnd"
+  StoreTaskBenefit:
+    node: "flows.nodes.s1.s1_3_task.StoreTaskBenefit"
   S2_HaveProposal:
     node: "flows.nodes.s2.s2_have_proposal.S2_HaveProposal"
   S2_1_PAndCFit:

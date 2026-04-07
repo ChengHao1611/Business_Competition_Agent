@@ -92,11 +92,8 @@ class S2_3_1_JudgeCompetitionQuiz(StateNode):
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
             next_state = "S2_3_CompetitionQuiz" 
 
-        add_data = {"quiz_answer": context.message}
-
         return Transition(
             next_state=next_state,
             replies=[reply],
-            data_delta=add_data,
             auto_advance=True,
         )

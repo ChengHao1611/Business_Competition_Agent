@@ -8,9 +8,7 @@ from core.flow.context import FlowContext, FlowDeps
 class S1_2_GenerateOutline(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
-        question_type = context.data["question_type"]
-        TA = context.data["TA"]
-        method = context.data["method"]
+        proposal = str(context.data["proposal"])
 
         messages = [{
             "role": "system",
@@ -22,9 +20,7 @@ class S1_2_GenerateOutline(StateNode):
                         "版本三: （主題導向，聚焦於競賽或社會議題主軸）\n")
         },{
             "role": "user",
-            "content": (f"你想解決的「問題類型」最像哪一種？ {question_type}\n"
-                        f"你主要想幫助的對象是誰？ {TA}"
-                        f"你預計用什麼形式來實作這個想法？ {method}")
+            "content": proposal
         }]
 
         outline = deps.llm_client.send_messages(messages)

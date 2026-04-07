@@ -27,11 +27,24 @@ class S1_3_1_TaskTA(StateNode):
         )
 
         return Transition(
-            next_state="S1_3_2_TaskPainPoint",
+            next_state="StoreTaskTA",
             replies=[reply],
             auto_advance=False,
         )
     
+class StoreTaskTA(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        proposal = context.data["proposal"]
+        add_data = {"proposal": proposal + ["這個題目想要幫助" + context.message]}
+
+        return Transition(
+            next_state="S1_3_2_TaskPainPoint",
+            replies=[],
+            data_delta=add_data,
+            auto_advance=True,
+        )
+
 class S1_3_2_TaskPainPoint(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
@@ -39,13 +52,23 @@ class S1_3_2_TaskPainPoint(StateNode):
             "這群人目前最明顯、最困擾的痛點是什麼？"
         )
 
-        add_data = {"TA": context.message}
+        return Transition(
+            next_state="StoreTaskPainPoint",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class StoreTaskPainPoint(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        proposal = context.data["proposal"]
+        add_data = {"proposal": proposal + ["他們最困擾的痛點是" + context.message]}
 
         return Transition(
             next_state="S1_3_3_TaskMethod",
-            replies=[reply],
+            replies=[],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True,
         )
     
 class S1_3_3_TaskMethod(StateNode):
@@ -55,13 +78,23 @@ class S1_3_3_TaskMethod(StateNode):
             "你打算用什麼方式或方法來改善這個問題？（可以是產品、服務、系統、流程或技術）"
         )
 
-        add_data = {"pain_point": context.message}
+        return Transition(
+            next_state="StoreTaskMethod",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class StoreTaskMethod(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        proposal = context.data["proposal"]
+        add_data = {"proposal": proposal + ["我打算用" + context.message + "來解決他們的問題"]}
 
         return Transition(
             next_state="S1_3_4_TaskBenefit",
-            replies=[reply],
+            replies=[],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True,
         )
 
 class S1_3_4_TaskBenefit(StateNode):
@@ -71,19 +104,17 @@ class S1_3_4_TaskBenefit(StateNode):
             "如果這個方法真的被使用，能為他們帶來什麼實際效益或改變？"
         )
 
-        add_data = {"method": context.message}
-
         return Transition(
-            next_state="S1_3_5_TaskEnd",
+            next_state="StoreTaskBenefit",
             replies=[reply],
-            data_delta=add_data,
             auto_advance=False,
         )
 
-class S1_3_5_TaskEnd(StateNode):
+class StoreTaskBenefit(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
 
-        add_data = {"benefit": context.message}
+        proposal = context.data["proposal"]
+        add_data = {"proposal": proposal + ["可以帶來這些效益：" + context.message]}
 
         return Transition(
             next_state="S2_HaveProposal",

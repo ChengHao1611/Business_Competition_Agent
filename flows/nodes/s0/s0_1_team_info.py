@@ -25,9 +25,21 @@ class ContactPerson(StateNode):
         )   
 
         return Transition(
-            next_state="ContactEmail",
+            next_state="StoreContactPerson",
             replies=[reply],
             auto_advance=False,
+        )
+    
+class StoreContactPerson(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        add_data = {"contact_person": context.message}
+
+        return Transition(
+            next_state="ContactEmail",
+            replies=[],
+            data_delta=add_data,
+            auto_advance=True
         )
 
 class ContactEmail(StateNode):
@@ -36,13 +48,22 @@ class ContactEmail(StateNode):
             "如果後續有需要請老師輔導，請告訴我該你的【email】，以便讓老師聯絡你，若無需輔導，則填無"
         )   
 
-        add_data = {"contact_person": context.message}
+        return Transition(
+            next_state="StoreContactEmail",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class StoreContactEmail(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        add_data = {"contact_email": context.message}
 
         return Transition(
             next_state="S0_1_1_TeamIdientity",
-            replies=[reply],
+            replies=[],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True
         )
 
 class S0_1_1_TeamIdientity(StateNode):
@@ -51,13 +72,22 @@ class S0_1_1_TeamIdientity(StateNode):
             "你們的身份(學生團隊/社會人士/混合/不確定)"
         )   
 
-        add_data = {"contact_email": context.message}
+        return Transition(
+            next_state="StoreTeamIdentity",
+            replies=[reply],
+            auto_advance=False,
+        )
+    
+class StoreTeamIdentity(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        add_data = {"team_info": ["team_identity: " + context.message]}
 
         return Transition(
             next_state="S0_1_2_TeamSize",
-            replies=[reply],
+            replies=[],
             data_delta=add_data,
-            auto_advance=False,
+            auto_advance=True
         )
 
 class S0_1_2_TeamSize(StateNode):
@@ -66,14 +96,26 @@ class S0_1_2_TeamSize(StateNode):
             "成員人數"
         )   
 
-        add_data = {"team_identity" : context.message}
+        return Transition(
+            next_state="StoreTeamSize",
+            replies=[reply],
+            auto_advance=False,
+        )
+    
+class StoreTeamSize(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        team_info = context.data["team_info"]
+
+        add_data = {"team_info": team_info + ["team_size: " + context.message]}
 
         return Transition(
             next_state="S0_1_3_TeamBackground",
-            replies=[reply],
-            data_delta = add_data,
-            auto_advance=False,
+            replies=[],
+            data_delta=add_data,
+            auto_advance=True
         )
+
     
 class S0_1_3_TeamBackground(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
@@ -81,13 +123,23 @@ class S0_1_3_TeamBackground(StateNode):
             "成員學校/系所背景"
         )   
 
-        add_data = {"team_size" : context.message}
+        return Transition(
+            next_state="StoreTeamBackground",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class StoreTeamBackground(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        team_info = context.data["team_info"]
+        add_data = {"team_info": team_info + ["team_background: " + context.message]}
 
         return Transition(
             next_state="S0_1_4_TeamHours",
-            replies=[reply],
-            data_delta = add_data,
-            auto_advance=False,
+            replies=[],
+            data_delta=add_data,
+            auto_advance=True,
         )
     
 class S0_1_4_TeamHours(StateNode):
@@ -96,13 +148,23 @@ class S0_1_4_TeamHours(StateNode):
             "每週可投入的準備時間(團隊總和)"
         )   
 
-        add_data = {"team_background" : context.message}
+        return Transition(
+            next_state="StoreTeamHours",
+            replies=[reply],
+            auto_advance=False,
+        )
+
+class StoreTeamHours(StateNode):
+    def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
+
+        team_info = context.data["team_info"]
+        add_data = {"team_info": team_info + ["team_hours: " + context.message]}
 
         return Transition(
             next_state="S0_1_5_End",
-            replies=[reply],
-            data_delta = add_data,
-            auto_advance=False,
+            replies=[],
+            data_delta=add_data,
+            auto_advance=True,
         )
 
 class S0_1_5_End(StateNode):
@@ -111,11 +173,8 @@ class S0_1_5_End(StateNode):
             "恭喜你! 我們完成了團隊基本資訊"
         )   
 
-        add_data = {"team_hours" : context.message}
-
         return Transition(
             next_state="S0_2_CompetitionInfo",
             replies=[reply],
-            data_delta = add_data,
             auto_advance=True,
         )
