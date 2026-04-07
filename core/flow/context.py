@@ -11,7 +11,6 @@ from core.ports.pdf_extractor import PdfExtractor
 @dataclass
 class FlowContext:
     user_id: str
-    user_name: str
     message: str
     data: dict[str, Any] = field(default_factory=dict)  # 從db抓的資料
     metadata: dict[str, Any] = field(default_factory=dict)  # 短暫資料 ex. PDF filepath, 狀態的小問題

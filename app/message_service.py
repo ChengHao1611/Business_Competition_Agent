@@ -23,12 +23,10 @@ class MessageService:
         reply_token: str,
         user_id: str,
         text: str,
-        user_name: str = "",
     ) -> str:
         transition = self._flow_service.handle_message(
             user_id=user_id,
             message=text,
-            user_name=user_name,
         )
         replies: list[str] = []
         for reply in transition.replies:
@@ -60,13 +58,11 @@ class MessageService:
         reply_token: str,
         user_id: str,
         file_path: str,
-        user_name: str = "",
     ) -> str:
         text = self._pdf_extractor.extract_text(file_path)
         transition = self._flow_service.handle_message(
             user_id=user_id,
             message=text,
-            user_name=user_name,
             metadata={"pdf_path": file_path, "pdf_text_len": len(text)},
         )
         replies: list[str] = []

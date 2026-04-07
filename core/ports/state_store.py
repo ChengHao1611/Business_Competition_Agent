@@ -6,7 +6,7 @@ from typing import Any
 
 class StateStore(ABC):
     @abstractmethod
-    def get_state(self, user_id: str, user_name: str = "") -> str:
+    def get_state(self, user_id: str) -> str:
         raise NotImplementedError
 
     @abstractmethod
@@ -22,7 +22,7 @@ class StateStore(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def acquire_lock(self, user_id: str, user_name: str = "") -> bool:
+    def acquire_lock(self, user_id: str) -> bool:
         raise NotImplementedError
 
     @abstractmethod

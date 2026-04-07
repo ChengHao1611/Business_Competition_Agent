@@ -19,11 +19,10 @@ class FlowService:
         self,
         user_id: str,
         message: str,
-        user_name: str = "",
         metadata: dict[str, Any] | None = None,
     ) -> Transition:
         try:
-            acquired = self._state_store.acquire_lock(user_id, user_name)
+            acquired = self._state_store.acquire_lock(user_id)
             if not acquired:
                 logger.warning(f"{user_id} 重複發送訊息")
                 transition = Transition(
@@ -33,7 +32,7 @@ class FlowService:
 
                 return transition
         except Exception:
-            logger.warning("資料庫出現莫名問題")
+            logger.exception("資料庫出現莫名問題")
             transition = Transition(
                 next_state="",
                 replies=["發生錯誤，請稍後再試"]
@@ -43,11 +42,10 @@ class FlowService:
         current_state = ""
 
         try:
-            current_state = self._state_store.get_state(user_id, user_name)
+            current_state = self._state_store.get_state(user_id)
             context_data = self._state_store.get_context(user_id)
             context = FlowContext(
                 user_id=user_id,
-                user_name=user_name,
                 message=message,
                 data=context_data,
                 metadata=metadata or {},

@@ -23,10 +23,9 @@ class SupabaseStateStore(StateStore):
         self._table = table
         self._start_state = start_state or "S0_welcome"
 
-    def _create_user(self, user_id: str, user_name: str) -> None:
+    def _create_user(self, user_id: str) -> None:
         data = {
             "line_id": user_id,
-            "line_name": user_name,
             "current_state": self._start_state,
             "lock": False,
             "data": {
@@ -46,7 +45,7 @@ class SupabaseStateStore(StateStore):
                 "three_outline": "",
                 "choose_outline": "",
                 "pain_point": "", #delete
-                "benefit": "", #check
+                "benefit": "", #delete
                 "competition_quiz": "",
                 "quiz_answer": "", #delete
                 "alignment_history":[],
@@ -56,7 +55,7 @@ class SupabaseStateStore(StateStore):
         self._supabase.table(self._table).insert(data).execute()
         logger.info("user created: %s", user_id)
 
-    def get_state(self, user_id: str, user_name: str = "") -> str:
+    def get_state(self, user_id: str) -> str:
         try:
             res = (
                 self._supabase
@@ -73,7 +72,7 @@ class SupabaseStateStore(StateStore):
             return res.data[0]["current_state"]
 
         logger.info("user missing; creating user: %s", user_id)
-        self._create_user(user_id, user_name)
+        self._create_user(user_id)
         return self._start_state
 
     def set_state(self, user_id: str, new_state: str) -> None:
@@ -110,7 +109,7 @@ class SupabaseStateStore(StateStore):
             .execute()
         )
 
-    def acquire_lock(self, user_id: str, user_name: str = "") -> bool:
+    def acquire_lock(self, user_id: str) -> bool:
         try:
             res = (
                 self._supabase
@@ -141,7 +140,7 @@ class SupabaseStateStore(StateStore):
 
         if not exists.data:
             logger.info("user missing; creating user: %s", user_id)
-            self._create_user(user_id, user_name)
+            self._create_user(user_id)
             try:
                 res = (
                     self._supabase
