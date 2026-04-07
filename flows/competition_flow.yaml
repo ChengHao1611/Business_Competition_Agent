@@ -33,8 +33,8 @@ states:
     node: "flows.nodes.s0.s0_1_team_info.S0_1_5_End"
   S0_2_CompetitionInfo:
     node: "flows.nodes.s0.s0_2_competition_info.S0_2_CompetitionInfo"
-  S0_2_1_GetCompetitionInfo:
-    node: "flows.nodes.s0.s0_2_competition_info.S0_2_1_GetCompetitionInfo"
+  CheckAndStoreCompetitionInfo:
+    node: "flows.nodes.s0.s0_2_competition_info.CheckAndStoreCompetitionInfo"
   S0_3_CompetitionFit:
     node: "flows.nodes.s0.s0_3_competition_fit.S0_3_CompetitionFit"
   S0_3_1_CompetitionFitRed:

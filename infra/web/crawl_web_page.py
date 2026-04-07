@@ -149,7 +149,14 @@ def search_competition_with_serpapi(
 
 class SerpApiWebFetcher(WebFetcher):
     def fetch_page_text(self, url: str) -> dict:
-        return fetch_page_text(url)
+        try:
+            return fetch_page_text(url)
+        except:
+            logger.exception(f"{url} 爬取失敗")
+            {"ok": False, 
+             "url": url, 
+             "error": "WEB_FETCH_FAILED_MESSAGE", 
+             "text": ""}
 
     def search_competition(self, competition_name: str, num_results: int = 10) -> dict:
         return search_competition_with_serpapi(competition_name, num_results=num_results)

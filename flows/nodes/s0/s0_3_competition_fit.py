@@ -10,15 +10,8 @@ logger = logging.getLogger(__name__)
 
 class S0_3_CompetitionFit(StateNode):
     def execute(self, context: FlowContext, deps: FlowDeps) -> Transition:
-        msg = context.message
 
-        if msg.startswith("http"):
-            competition_info = deps.web_fetcher.fetch_page_text(msg)
-        else:
-            #competition_info = deps.web_fetcher.search_competition(msg)
-            competition_info = context.message
-
-        competition_info = str(competition_info)
+        competition_info = context.data["competition"]
 
         ## 整理競賽資訊
         messages: list[dict[str,str]] = [{
@@ -66,14 +59,10 @@ class S0_3_CompetitionFit(StateNode):
             logger.warning("Failed to parse verdict from reply: %s", reply_text)
             next_state = "S0_3_1_CompetitionFitRed"
 
-        add_data = {
-            "competition": competition_info
-        }
        
         return Transition(
             next_state=next_state,
             replies=[reply_text],
-            data_delta=add_data,
             auto_advance=True,
         )
     
