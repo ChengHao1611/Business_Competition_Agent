@@ -29,7 +29,6 @@ class CheckAndStoreCompetitionInfo(StateNode):
                 return Transition(
                     next_state="CheckAndStoreCompetitionInfo",
                     replies=[reply],
-                    data_delta=add_data,
                     auto_advance=False,
                 )
         else:

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>競賽小幫手 Web</title>
+    <link rel="stylesheet" href="{{ url_for('web_chat.static', filename='css/web_chat.css') }}">
+  </head>
+  <body data-max-upload-mb="{{ max_upload_mb }}">
+    <main class="shell">
+      <aside class="info-panel">
+        <section class="info-copy">
+          <div class="eyebrow">使用資訊</div>
+          <h1>把參賽準備，拆成一步一步。</h1>
+          <p>
+            你可以在右側進行對話，系統會一步步引導你整理團隊資訊、理解競賽、補齊提案內容。
+            中間會把你填過的資料整理成流程區塊，你可以回頭修改，並重新生成後續內容。
+          </p>
+        </section>
+
+        <section class="info-note">
+          <strong>小提醒</strong>
+          <div>建議一次回覆一則訊息，等待系統回覆後再繼續。</div>
+          <div>若你上傳 PDF，內容會被轉成文字來分析。</div>
+        </section>
+      </aside>
+
+      <section class="flow-panel">
+        <div class="flow-head">
+          <strong>流程區塊</strong>
+          <span>修改任一區塊後，系統會重新計算並更新後續回覆。</span>
+        </div>
+        <div class="flow-body" id="flow-blocks">
+          <div class="hint">正在載入流程區塊...</div>
+        </div>
+      </section>
+
+      <section class="chat-panel">
+        <div class="chat-head">
+          <div class="chat-title">
+            <strong>對話</strong>
+            <span>照著問題回答，或貼上競賽網址與提案內容即可。</span>
+          </div>
+          <div class="toolbar">
+            <span class="status-pill" id="state-pill">準備中</span>
+            <label class="upload-label">
+              上傳 PDF
+              <input type="file" id="pdf-input" accept="application/pdf,.pdf">
+            </label>
+            <button class="ghost" id="reset-btn" type="button">新對話</button>
+          </div>
+        </div>
+
+        <div class="messages" id="messages"></div>
+
+        <div class="typing" id="typing">小幫手正在整理回覆...</div>
+
+        <form class="composer" id="chat-form">
+          <div class="quick-actions">
+            <button type="button" data-prompt="開始">開始對話</button>
+            <button type="button" data-prompt="我們是學生團隊，想先確認適合參加什麼競賽">我要先看競賽適配</button>
+            <button type="button" data-prompt="我已經有提案，想直接確認是否符合競賽需求">我已經有提案</button>
+          </div>
+
+          <div class="input-row">
+            <textarea
+              id="message-input"
+              placeholder="請輸入你的回答或補充內容..."
+            ></textarea>
+            <button class="primary" id="send-btn" type="submit">送出訊息</button>
+          </div>
+
+          <div class="footnote">
+            <span id="session-text">對話 ID: {{ user_id }}</span>
+            <span>PDF 上限 {{ max_upload_mb }}MB</span>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="{{ url_for('web_chat.static', filename='js/web_chat.js') }}"></script>
+  </body>
+  </html>

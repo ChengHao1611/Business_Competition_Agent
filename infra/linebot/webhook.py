@@ -6,7 +6,7 @@ import tempfile
 from pathlib import Path
 
 import requests
-from flask import Flask, request, abort
+from flask import Flask, Response, abort, redirect, request, url_for
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, FollowEvent, FileMessage
@@ -20,12 +20,18 @@ from infra.linebot.reply import LineBotMessageGateway
 from infra.pdf.pypdf_extractor import PyPdfExtractor
 from infra.llm.ollama_client import OllamaClient
 from infra.web.crawl_web_page import SerpApiWebFetcher
+from infra.webapp import create_web_blueprint
 
 logger = logging.getLogger(__name__)
 
 PDF_SIZE_MB = 20
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = (
+    os.getenv("WEB_SESSION_SECRET")
+    or os.getenv("FLASK_SECRET_KEY")
+    or "dev-web-session-secret"
+)
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -41,6 +47,7 @@ state_machine = StateMachine(registry, deps)
 flow_service = FlowService(state_store, state_machine)
 message_gateway = LineBotMessageGateway(line_bot_api)
 message_service = MessageService(flow_service, message_gateway, pdf_extractor=deps.pdf_extractor)
+app.register_blueprint(create_web_blueprint(flow_service, state_store, deps.pdf_extractor))
 
 
 def _safe_reply(reply_token: str, user_id: str, text: str) -> None:
@@ -66,7 +73,17 @@ def callback():
 
 @app.route("/")
 def home():
+    return redirect(url_for("web_chat.web_home"))
+
+
+@app.route("/health")
+def health():
     return "OK", 200
+
+
+@app.route("/favicon.ico")
+def favicon():
+    return Response(status=204)
 
 @handler.add(FollowEvent)
 def handle_follow(event):
