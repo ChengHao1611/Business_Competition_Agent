@@ -21,4 +21,9 @@ else:
     FLOW_CONFIG_PATH = BASE_DIR / "flows" / "competition_flow.yaml"
 
 LOG_LEVEL = get_env("LOG_LEVEL", "WARN").upper()
+WEB_SESSION_SECRET = (
+    get_env("WEB_SESSION_SECRET")
+    or get_env("FLASK_SECRET_KEY")
+    or "dev-web-session-secret"
+)
 
