@@ -20,6 +20,7 @@ class OllamaClient(LLMClient):
         client = Client(
             host="https://ollama.com",
             headers={"Authorization": "Bearer " + self._api_key},
+            timeout=60,
         )
 
         logger.info("等待ollama回應")
